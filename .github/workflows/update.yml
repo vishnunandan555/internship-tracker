@@ -68,18 +68,23 @@ jobs:
       - name: Commit and push changes
         if: github.event.inputs.dry_run != 'true'
         run: |
-          git config user.name "internship-bot"
-          git config user.email "actions@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add README.md LIST.md data/ docs/ logs/
           if git diff --cached --quiet; then
             echo "No database or README changes to commit."
             exit 0
           fi
-          MSG="update listings"
-          if [ "${{ steps.scrape.outputs.added }}" != "0" ] && [ -n "${{ steps.scrape.outputs.added }}" ]; then
-            MSG="🆕 ${{ steps.scrape.outputs.added }} new internship(s)"
+          ADDED="${{ steps.scrape.outputs.added }}"
+          CLOSED="${{ steps.scrape.outputs.closed }}"
+          if [ "$ADDED" != "0" ] && [ -n "$ADDED" ]; then
+            MSG="data(sync): 🆕 $ADDED new internship(s) (+$ADDED / -$CLOSED) [skip ci]"
+          elif [ "$CLOSED" != "0" ] && [ -n "$CLOSED" ]; then
+            MSG="data(sync): 🔻 $CLOSED internship(s) closed (+$ADDED / -$CLOSED) [skip ci]"
+          else
+            MSG="data(sync): refresh verified listings (+$ADDED / -$CLOSED) [skip ci]"
           fi
-          git commit -m "$MSG (+${{ steps.scrape.outputs.added }} / -${{ steps.scrape.outputs.closed }}) [skip ci]"
+          git commit -m "$MSG"
           git pull --rebase
           git push
 
