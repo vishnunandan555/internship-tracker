@@ -674,18 +674,31 @@
     width: 46px;
     height: 46px;
     border-radius: 12px;
-    background: var(--badge-bg);
+    background: #ffffff;
     border: 1px solid var(--border);
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 800;
     font-size: 15px;
-    color: var(--ink);
+    color: #0f172a;
     flex-shrink: 0;
     text-transform: uppercase;
     letter-spacing: -0.02em;
     font-family: 'JetBrains Mono', monospace;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  }
+  .company-avatar img.company-logo-img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    display: block;
+  }
+  :root[data-theme="dark"] .company-avatar {
+    background: #ffffff;
+    border-color: rgba(255, 255, 255, 0.16);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
   }
   .job-details {
     flex: 1;
@@ -887,16 +900,28 @@
     width: 32px;
     height: 32px;
     border-radius: 8px;
-    background: var(--badge-bg);
+    background: #ffffff;
     border: 1px solid var(--border);
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 700;
     font-size: 11.5px;
-    color: var(--ink);
+    color: #0f172a;
     flex-shrink: 0;
     font-family: 'JetBrains Mono', monospace;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+  .compact-avatar img.compact-logo-img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    display: block;
+  }
+  :root[data-theme="dark"] .compact-avatar {
+    background: #ffffff;
+    border-color: rgba(255, 255, 255, 0.16);
   }
   .compact-title-box {
     min-width: 0;
@@ -1353,6 +1378,22 @@
     return company.slice(0, 2).toUpperCase();
   }
 
+  function getCompanySlug(company) {
+    if (!company) return "";
+    return company.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  }
+
+  function renderAvatar(company, isCompact) {
+    var slug = getCompanySlug(company);
+    var letters = getAvatarLetters(company);
+    var boxCls = isCompact ? "compact-avatar" : "company-avatar";
+    var imgCls = isCompact ? "compact-logo-img" : "company-logo-img";
+    return '<div class="' + boxCls + '" title="' + company + '">' +
+      '<img class="' + imgCls + '" src="./logos/' + slug + '.png" alt="' + company + '" onerror="this.style.display=\'none\'; if(this.nextElementSibling) this.nextElementSibling.style.display=\'block\';" loading="lazy">' +
+      '<span class="avatar-fallback" style="display:none;">' + letters + '</span>' +
+    '</div>';
+  }
+
   function showToast(msg) {
     var toast = document.getElementById("toast");
     document.getElementById("toast-text").innerText = msg;
@@ -1520,12 +1561,11 @@
       var isSaved = savedKeys.indexOf(j.uid) !== -1;
       var locDisplay = j.city_tag || (j.locations && j.locations[0]) || "India";
       var dateDisplay = formatRelativeDate(j.posted || j.first_seen);
-      var avatar = getAvatarLetters(j.company);
       var catClass = (j.category === "AI/ML") ? "cat-ai" : (j.category === "Hardware/Silicon" ? "cat-hw" : "");
 
       return '<div class="job-card">' +
         '<div class="job-left">' +
-          '<div class="company-avatar">' + avatar + '</div>' +
+          renderAvatar(j.company, false) +
           '<div class="job-details">' +
             '<div class="job-title-row">' +
               '<span class="company-name">' + j.company + '</span>' +
@@ -1581,11 +1621,10 @@
         var isSaved = savedKeys.indexOf(j.uid) !== -1;
         var locDisplay = j.city_tag || (j.locations && j.locations[0]) || "India";
         var dateDisplay = formatRelativeDate(j.posted || j.first_seen);
-        var avatar = getAvatarLetters(j.company);
 
         return '<div class="compact-row">' +
           '<div class="compact-role">' +
-            '<div class="compact-avatar">' + avatar + '</div>' +
+            renderAvatar(j.company, true) +
             '<div class="compact-title-box">' +
               '<div class="compact-title"><a href="' + j.url + '" target="_blank" rel="noopener">' + j.title + '</a></div>' +
               '<div class="compact-sub">' +
