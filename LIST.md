@@ -1,10 +1,10 @@
 # Companies List
 
-> 🕐 Last updated: **2026-09-17 22:54:41 IST**
+> 🕐 Last updated: **2026-09-17 23:15:25 IST**
 
 A quick reference list of companies tracked by the scraper and their latest status.
 
-## Scraped Companies (55)
+## Scraped Companies (56)
 
 - AMD
 - Accenture
@@ -31,6 +31,7 @@ A quick reference list of companies tracked by the scraper and their latest stat
 - InMobi
 - Intel
 - JPMorgan Chase
+- Jane Street
 - Mastercard
 - Meesho
 - Meta
@@ -66,7 +67,7 @@ A quick reference list of companies tracked by the scraper and their latest stat
 
 *None*
 
-## Unsupported Companies (32)
+## Unsupported Companies (33)
 
 - **ASML** — *has no software engineering/R&D center in India (field service only in Gujarat); portal is custom Next.js without public CXS API*
 - **American Express** — *careers site sits behind Akamai bot defense returning 403 to automated clients*
@@ -93,6 +94,7 @@ A quick reference list of companies tracked by the scraper and their latest stat
 - **Postman** — *retired public Greenhouse board; careers site runs custom Next.js frontend without public search API*
 - **SAP** — *SuccessFactors career site requires authenticated recruiter operators; no public search API*
 - **Siemens** — *careers site runs on Avature global portal without public JSON search API; requires interactive session*
+- **Spotify** — *limited tech/engineering presence in India; student hiring primarily US/EU/UK*
 - **Target** — *US retail company with no India engineering center; scraper returns 0 India listings across 300+ postings*
 - **Tata Consultancy Services** — *student tech hiring conducted exclusively through TCS NextStep / National Qualifier Test (NQT) campus portal*
 - **Tesla** — *careers site sits behind Akamai bot protection returning 403 to non-browser clients*

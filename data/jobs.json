@@ -110,7 +110,7 @@
       "url": "https://apply.careers.microsoft.com/careers/job/1970393556997800"
     },
     "nvidia:JR2024423": {
-      "active": false,
+      "active": true,
       "category": "AI/ML",
       "city_tag": "Bengaluru",
       "closed": "2026-09-17",
@@ -119,6 +119,7 @@
       "first_seen": "2026-09-17",
       "last_seen": "2026-09-17",
       "locations": [
+        "India Bengaluru",
         "India, Bengaluru"
       ],
       "posted": "2026-08-31",
@@ -142,7 +143,7 @@
     },
     "qualcomm:446719784824": {
       "active": true,
-      "category": "Hardware/Silicon",
+      "category": "Software",
       "city_tag": "Bengaluru",
       "company": "Qualcomm",
       "external_id": "446719784824",
@@ -263,5 +264,5 @@
       "url": "https://walmart.wd504.myworkdayjobs.com/en-US/WalmartExternal/job/IN-KA-BANGALORE-Home-Office-Building-10/XMLNAME--IND--Grad-Intern---No-Work-Experience_R-2557935"
     }
   },
-  "updated_at": "2026-09-17T17:14:05Z"
+  "updated_at": "2026-09-17T17:45:25Z"
 }

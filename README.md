@@ -3,7 +3,7 @@
 
 Auto-updated list of **open tech & software-engineering internships in India** —
 AI/ML, Data, Full-Stack, Backend, Frontend, Mobile, QA/SDET, and Security roles — at
-55 top tech companies, GCCs, and high-growth Indian unicorns. Scraped directly
+56 top tech companies, GCCs, and high-growth Indian unicorns. Scraped directly
 from official careers APIs daily (at 03:00 AM IST) by GitHub Actions.
 
 [![Live Web Dashboard](https://img.shields.io/badge/Live_Dashboard-InternTrack_India-f97316?style=for-the-badge&logo=googlechrome&logoColor=white)](https://vishnunandan555.github.io/internship-tracker/)
@@ -12,12 +12,12 @@ from official careers APIs daily (at 03:00 AM IST) by GitHub Actions.
 [![Roadmap](https://img.shields.io/badge/Roadmap-ROADMAP.md-7c3aed?style=for-the-badge&logo=target&logoColor=white)](ROADMAP.md)
 [![Scrape Logs](https://img.shields.io/badge/Scrape_Logs-logs%2F-059669?style=for-the-badge&logo=files&logoColor=white)](logs/)
 
-> 🕐 Last updated: **2026-09-17 22:44:05 IST** · 📌 **16** open internships
+> 🕐 Last updated: **2026-09-17 23:15:25 IST** · 📌 **17** open internships
 > · 🆕 = added in the last 7 days
 
 ⭐ Star this repository to keep track of new openings — or watch *Activity* for commits titled “new internship(s)”.
 
-[⬇️ **Skip directly to Open Internship Postings (16)**](#open-internships)
+[⬇️ **Skip directly to Open Internship Postings (17)**](#open-internships)
 
 | Company | Open Internships in India |
 |---|:---:|
@@ -46,6 +46,7 @@ from official careers APIs daily (at 03:00 AM IST) by GitHub Actions.
 | InMobi | — |
 | Intel | — |
 | JPMorgan Chase | — |
+| Jane Street | — |
 | Mastercard | — |
 | Meesho | — |
 | Meta | — |
@@ -53,7 +54,7 @@ from official careers APIs daily (at 03:00 AM IST) by GitHub Actions.
 | [Microsoft](#microsoft) | **4** |
 | MongoDB | — |
 | Morgan Stanley | — |
-| NVIDIA | — |
+| [NVIDIA](#nvidia) | **1** |
 | Netflix | — |
 | Nokia | — |
 | Oracle | — |
@@ -101,6 +102,7 @@ from official careers APIs daily (at 03:00 AM IST) by GitHub Actions.
 | Postman | *retired public Greenhouse board; careers site runs custom Next.js frontend without public search API* |
 | SAP | *SuccessFactors career site requires authenticated recruiter operators; no public search API* |
 | Siemens | *careers site runs on Avature global portal without public JSON search API; requires interactive session* |
+| Spotify | *limited tech/engineering presence in India; student hiring primarily US/EU/UK* |
 | Target | *US retail company with no India engineering center; scraper returns 0 India listings across 300+ postings* |
 | Tata Consultancy Services | *student tech hiring conducted exclusively through TCS NextStep / National Qualifier Test (NQT) campus portal* |
 | Tesla | *careers site sits behind Akamai bot protection returning 403 to non-browser clients* |
@@ -143,12 +145,20 @@ from official careers APIs daily (at 03:00 AM IST) by GitHub Actions.
 
 [⬆️ Back to Top](#top)
 
+## NVIDIA
+
+| Role | Category | Hub / Location | Posted | First seen |
+|---|---|---|---|---|
+| [PhD Intern, AI ML in Wireless L1/L2 - Fall 2026](https://nvidia.wd5.myworkdayjobs.com/en-US/NVIDIAExternalCareerSite/job/India-Bengaluru/PhD-Intern--AI-ML-in-Wireless-L1-L2---Fall-2026_JR2024423) 🆕 | AI/ML | Bengaluru | 2026-08-31 | 2026-09-17 |
+
+[⬆️ Back to Top](#top)
+
 ## Qualcomm
 
 | Role | Category | Hub / Location | Posted | First seen |
 |---|---|---|---|---|
 | [Interim Engineering Intern_2027_SW](https://careers.qualcomm.com/careers/job/446719785836?domain=qualcomm.com) 🆕 | Software | Hyderabad | 2026-09-15 | 2026-09-17 |
-| [Interim Engineering Intern_2027_HW](https://careers.qualcomm.com/careers/job/446719784824?domain=qualcomm.com) 🆕 | Hardware/Silicon | Bengaluru | 2026-09-09 | 2026-09-17 |
+| [Interim Engineering Intern_2027_HW](https://careers.qualcomm.com/careers/job/446719784824?domain=qualcomm.com) 🆕 | Software | Bengaluru | 2026-09-09 | 2026-09-17 |
 | [1 year  Internship_SW_CDC](https://careers.qualcomm.com/careers/job/446717035053?domain=qualcomm.com) 🆕 | Software | Chennai | 2026-02-24 | 2026-09-17 |
 
 [⬆️ Back to Top](#top)
