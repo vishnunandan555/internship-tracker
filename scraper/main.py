@@ -107,6 +107,17 @@ def run(only_companies=None, keyword=None, dry_run=False, workers=8):
             all_india_jobs=all_jobs,
             is_dry_run=True,
         )
+        gh_output = os.environ.get("GITHUB_OUTPUT")
+        if gh_output:
+            with open(gh_output, "a") as fh:
+                fh.write(f"added=0\nclosed=0\nfailed={len(failed)}\n")
+        gh_summary = os.environ.get("GITHUB_STEP_SUMMARY")
+        if gh_summary:
+            with open(gh_summary, "a") as fh:
+                fh.write("### ⚠️ Dry Run Completed (No Database Changes)\n\n")
+                fh.write(f"- **Total Time:** `{total_duration:.1f}s`\n")
+                fh.write(f"- **Companies Succeeded:** `{len(succeeded)}`\n")
+                fh.write(f"- **Active India Postings Found:** `{len(all_jobs)}`\n\n")
         return 0
 
     # Merge into database and diff
@@ -146,6 +157,32 @@ def run(only_companies=None, keyword=None, dry_run=False, workers=8):
     if gh_output:
         with open(gh_output, "a") as fh:
             fh.write(f"added={len(added)}\nclosed={len(closed)}\nfailed={len(failed)}\n")
+
+    # Render a rich dashboard inside GitHub Actions Job Summary
+    gh_summary = os.environ.get("GITHUB_STEP_SUMMARY")
+    if gh_summary:
+        with open(gh_summary, "a") as fh:
+            fh.write("### 🚀 India Tech Internships Scrape Summary\n\n")
+            fh.write(f"- **Runtime:** `{total_duration:.1f}s` (parallel execution)\n")
+            fh.write(f"- **Companies Succeeded:** `{len(succeeded)}` | **Failed:** `{len(failed)}`\n")
+            fh.write(f"- **Active India Internships:** `{len(all_jobs)}`\n")
+            fh.write(f"- **New Postings Added:** `{len(added)}` | **Closed:** `{len(closed)}`\n\n")
+
+            if added:
+                fh.write("#### 🆕 New Internships Discovered\n\n")
+                fh.write("| Company | Role | Hub | Category |\n|---|---|---|---|\n")
+                for j in added:
+                    loc = j.get("city_tag") or "India"
+                    fh.write(f"| **{j['company']}** | [{j['title']}]({j['url']}) | {loc} | `{j.get('category', 'Tech')}` |\n")
+                fh.write("\n")
+
+            if failed:
+                fh.write("#### ⚠️ Scraper Diagnostics\n\n")
+                fh.write("| Company | Error Message |\n|---|---|\n")
+                for c, err in sorted(failed.items()):
+                    short_err = str(err).split("\n")[0][:80]
+                    fh.write(f"| **{c}** | `{short_err}` |\n")
+                fh.write("\n")
 
     return 0
 

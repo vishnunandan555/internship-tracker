@@ -3,7 +3,24 @@ name: Update India internship listings
 on:
   schedule:
     - cron: "17 */3 * * *" # every 3 hours
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      company:
+        description: "Company to scrape (leave blank for all 42)"
+        required: false
+        default: ""
+      keyword:
+        description: "Filter by title keyword (e.g. 2027, hardware)"
+        required: false
+        default: ""
+      dry_run:
+        description: "Dry run (test scrape without committing changes)"
+        type: boolean
+        default: false
+      workers:
+        description: "Concurrency worker threads (default: 8)"
+        required: false
+        default: "8"
 
 permissions:
   contents: write
@@ -17,41 +34,72 @@ jobs:
   scrape:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python 3.12 with pip cache
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: "pip"
 
-      - run: pip install -r requirements.txt
+      - name: Install dependencies
+        run: pip install -r requirements.txt
 
-      - name: Scrape careers pages
+      - name: Run concurrent scraper
         id: scrape
-        run: python -m scraper.main
+        env:
+          PYTHONUNBUFFERED: "1"
+          FORCE_COLOR: "1"
+          SERP_API_KEY: ${{ secrets.SERP_API_KEY }}
+          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+        run: |
+          CMD="python -m scraper.main"
+          if [ -n "${{ github.event.inputs.company }}" ]; then
+            CMD="$CMD -c '${{ github.event.inputs.company }}'"
+          fi
+          if [ -n "${{ github.event.inputs.keyword }}" ]; then
+            CMD="$CMD -k '${{ github.event.inputs.keyword }}'"
+          fi
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            CMD="$CMD --dry-run"
+          fi
+          if [ -n "${{ github.event.inputs.workers }}" ]; then
+            CMD="$CMD -w ${{ github.event.inputs.workers }}"
+          fi
+          echo "Executing: $CMD"
+          eval "$CMD"
 
-      - name: Commit and push if anything changed
+      - name: Commit and push changes
+        if: github.event.inputs.dry_run != 'true'
         run: |
           git config user.name "internship-bot"
           git config user.email "actions@users.noreply.github.com"
           git add README.md data/ docs/
           if git diff --cached --quiet; then
-            echo "no changes"
+            echo "No database or README changes to commit."
             exit 0
           fi
           MSG="update listings"
-          if [ "${{ steps.scrape.outputs.added }}" != "0" ]; then
+          if [ "${{ steps.scrape.outputs.added }}" != "0" ] && [ -n "${{ steps.scrape.outputs.added }}" ]; then
             MSG="🆕 ${{ steps.scrape.outputs.added }} new internship(s)"
           fi
-          git commit -m "$MSG (+${{ steps.scrape.outputs.added }} / -${{ steps.scrape.outputs.closed }})"
+          git commit -m "$MSG (+${{ steps.scrape.outputs.added }} / -${{ steps.scrape.outputs.closed }}) [skip ci]"
+          git pull --rebase
           git push
 
-      - name: Open an issue if a scraper broke
-        if: steps.scrape.outputs.failed != '0'
+      - name: Report scraper failures as GitHub Issues
+        if: steps.scrape.outputs.failed != '0' && steps.scrape.outputs.failed != '' && github.event.inputs.dry_run != 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          TITLE="scraper failure: $(python -c "import json;d=json.load(open('data/health.json'));print(', '.join(sorted(d['failed'])))")"
-          BODY=$(python -c "import json;d=json.load(open('data/health.json'));print('\n'.join('- **%s**: %s' % kv for kv in sorted(d['failed'].items())))")
+          if [ ! -f "data/health.json" ]; then
+            exit 0
+          fi
+          TITLE="scraper failure: $(python -c "import json;d=json.load(open('data/health.json'));print(', '.join(sorted(d.get('failed', {}).keys())))")"
+          BODY=$(python -c "import json;d=json.load(open('data/health.json'));print('\n'.join('- **%s**: %s' % kv for kv in sorted(d.get('failed', {}).items())))")
           gh label create scraper-health --color D93F0B --description "a careers-API scraper is failing" 2>/dev/null || true
           # avoid duplicate issues for the same breakage
           if ! gh issue list --state open --search "$TITLE in:title" --json title -q '.[].title' | grep -qF "$TITLE"; then
