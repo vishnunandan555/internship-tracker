@@ -1,0 +1,69 @@
+"""Software-engineering role classifier for India Tech Internships.
+
+The tracker lists tech & engineering internships: AI/ML, Data, Mobile, Frontend,
+Backend/Infra, general Software (SWE/SDE/MTS), QA, Security. categorize() returns
+the category for a title, or None for out-of-scope roles (sales, HR, finance,
+legal, marketing, operations, ...) which are then dropped.
+
+Order matters: first matching category wins, so the more specific ones
+(Security, QA, Mobile, ...) come before the catch-alls.
+"""
+import re
+
+
+def _rx(pattern):
+    return re.compile(pattern, re.IGNORECASE)
+
+
+# Unambiguous engineering-role signals in India tech roles (SDE, MTS, SWE, etc.).
+HARD_INCLUDE_RE = _rx(
+    r"software|machine learning|deep learning|computer vision|"
+    r"applied scien|research scien|data scien|data engineer|data analy|"
+    r"full[- ]?stack|front[- ]?end|back[- ]?end|\bios\b|android|\bsdet\b|"
+    r"security engineer|cybersecurity|\bnlp\b|\bllm\b|compiler|kernel|"
+    r"\bsde\b|\bmts\b|\bswe\b|graduate engineer trainee|\bget\b|"
+    r"technology intern|technical intern|firmware|embedded|systems engineer"
+)
+
+# Roles that pattern-match a keyword but aren't tech/software engineering work.
+EXCLUDE_RE = _rx(
+    r"technician|data cent(er|re)|solutions? engineer|sales|account manag|"
+    r"customer success|field engineer|facilities|construction|mechanical|"
+    r"civil engineer|manufacturing|supply chain|operations manager|"
+    r"process engineer|industrial engineer|recruiter|talent acquisition|marketing|"
+    r"human resources|\bhr\b|finance|legal|counsel|accountant|warehouse"
+)
+
+CATEGORIES = [
+    ("Security", _rx(r"security|cyber|infosec|appsec|threat|penetration|red team|"
+                     r"vulnerab|crypto(graph|log)")),
+    ("QA", _rx(r"\bqa\b|quality (assurance|engineer)|test(ing)? engineer|"
+               r"software test|\bsdet\b|validation")),
+    ("AI/ML", _rx(r"\bai\b|artificial intelligence|machine learning|\bml\b|"
+                  r"deep learning|computer vision|\bnlp\b|\bllm\b|gen ?ai|"
+                  r"generative|applied scien|research scien|research engineer|"
+                  r"student researcher|robotics|autonom|perception|recommender|"
+                  r"applied scientist|research scientist")),
+    ("Data", _rx(r"\bdata\b|analytics|business intelligence|bi engineer")),
+    ("Mobile", _rx(r"mobile|\bios\b|android|flutter|react native")),
+    ("Frontend", _rx(r"front[- ]?end|web develop|web engineer|\bui engineer\b|"
+                     r"javascript|typescript|\breact\b")),
+    ("Backend/Infra", _rx(r"back[- ]?end|distributed|infrastructure|platform|"
+                          r"cloud|devops|site reliability|\bsre\b|\bapi\b|"
+                          r"database|storage|network|linux|kernel|embedded|"
+                          r"firmware|compiler|operating system|virtualization")),
+    ("Software", _rx(r"software|\bswe\b|\bsde\b|\bmts\b|developer|full[- ]?stack|programmer|"
+                     r"application develop|computer science|solution develop|"
+                     r"game develop|\bdev\b|\bjava\b|\bpython\b|c\+\+|"
+                     r"\bgolang\b|\brust\b|graduate engineer trainee|\bget\b|"
+                     r"technical intern|technology intern")),
+]
+
+
+def categorize(title):
+    if not HARD_INCLUDE_RE.search(title) and EXCLUDE_RE.search(title):
+        return None
+    for name, pattern in CATEGORIES:
+        if pattern.search(title):
+            return name
+    return None

@@ -1,0 +1,112 @@
+{
+  "jobs": {
+    "google:109976286780105414": {
+      "active": true,
+      "category": "Software",
+      "city_tag": "Bengaluru",
+      "company": "Google",
+      "external_id": "109976286780105414",
+      "first_seen": "2026-09-17",
+      "last_seen": "2026-09-17",
+      "locations": [
+        "Bengaluru, Karnataka, India",
+        "Hyderabad, Telangana, India",
+        "Pune, Maharashtra, India"
+      ],
+      "posted": "2026-09-07",
+      "title": "Software Engineering PhD Intern, Summer 2027",
+      "url": "https://www.google.com/about/careers/applications/jobs/results/109976286780105414"
+    },
+    "microsoft:1970393556641091": {
+      "active": true,
+      "category": "AI/ML",
+      "city_tag": "India (Multiple/Other)",
+      "company": "Microsoft",
+      "external_id": "1970393556641091",
+      "first_seen": "2026-09-17",
+      "last_seen": "2026-09-17",
+      "locations": [
+        "India, Multiple Locations, Multiple Locations"
+      ],
+      "posted": "2026-02-27",
+      "title": "Research Sciences INTERN",
+      "url": "https://apply.careers.microsoft.com/careers/job/1970393556641091"
+    },
+    "microsoft:1970393556911730": {
+      "active": true,
+      "category": "Software",
+      "city_tag": "India (Multiple/Other)",
+      "company": "Microsoft",
+      "external_id": "1970393556911730",
+      "first_seen": "2026-09-17",
+      "last_seen": "2026-09-17",
+      "locations": [
+        "India, Multiple Locations, Multiple Locations"
+      ],
+      "posted": "2026-08-28",
+      "title": "Software Engineering INTERN",
+      "url": "https://apply.careers.microsoft.com/careers/job/1970393556911730"
+    },
+    "microsoft:1970393556971804": {
+      "active": true,
+      "category": "AI/ML",
+      "city_tag": "Bengaluru",
+      "company": "Microsoft",
+      "external_id": "1970393556971804",
+      "first_seen": "2026-09-17",
+      "last_seen": "2026-09-17",
+      "locations": [
+        "India, Karnataka, Bangalore"
+      ],
+      "posted": "2026-08-20",
+      "title": "Research Sciences INTERN",
+      "url": "https://apply.careers.microsoft.com/careers/job/1970393556971804"
+    },
+    "microsoft:1970393556997800": {
+      "active": true,
+      "category": "AI/ML",
+      "city_tag": "India (Multiple/Other)",
+      "company": "Microsoft",
+      "external_id": "1970393556997800",
+      "first_seen": "2026-09-17",
+      "last_seen": "2026-09-17",
+      "locations": [
+        "India, Multiple Locations, Multiple Locations"
+      ],
+      "posted": "2026-09-14",
+      "title": "Applied Sciences INTERN",
+      "url": "https://apply.careers.microsoft.com/careers/job/1970393556997800"
+    },
+    "nvidia:JR2024423": {
+      "active": true,
+      "category": "AI/ML",
+      "city_tag": "Bengaluru",
+      "company": "NVIDIA",
+      "external_id": "JR2024423",
+      "first_seen": "2026-09-17",
+      "last_seen": "2026-09-17",
+      "locations": [
+        "India, Bengaluru"
+      ],
+      "posted": "2026-08-31",
+      "title": "PhD Intern, AI ML in Wireless L1/L2 - Fall 2026",
+      "url": "https://nvidia.wd5.myworkdayjobs.com/en-US/NVIDIAExternalCareerSite/job/India-Bengaluru/PhD-Intern--AI-ML-in-Wireless-L1-L2---Fall-2026_JR2024423"
+    },
+    "stripe:8031833": {
+      "active": true,
+      "category": "Software",
+      "city_tag": "Bengaluru",
+      "company": "Stripe",
+      "external_id": "8031833",
+      "first_seen": "2026-09-17",
+      "last_seen": "2026-09-17",
+      "locations": [
+        "Bengaluru"
+      ],
+      "posted": "2026-07-10",
+      "title": "Software Engineer, Intern",
+      "url": "https://stripe.com/jobs/search?gh_jid=8031833"
+    }
+  },
+  "updated_at": "2026-09-17T15:57:46Z"
+}
