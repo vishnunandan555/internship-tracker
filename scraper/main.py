@@ -159,10 +159,26 @@ def main():
     parser.add_argument("-c", "--company", action="append", help="Company name to scrape (can be repeated or comma-separated)")
     parser.add_argument("-k", "--keyword", help="Custom keyword to filter internship titles (e.g. 'hardware', '2027')")
     parser.add_argument("-d", "--dry-run", action="store_true", help="Preview scraped listings without modifying data/ or README")
+    parser.add_argument("-s", "--search", help="Universal search for any company/keyword using Google Jobs/SERP API")
     parser.add_argument("-w", "--workers", type=int, default=8, help="Number of concurrent worker threads (default: 8)")
     parser.add_argument("-l", "--list", action="store_true", help="List all configured and unsupported companies")
 
     args = parser.parse_args()
+
+    if args.search:
+        from .adapters import serp_jobs
+        print(display.bold(f"\n🔍 Querying Universal Job Search for: '{args.search}'..."))
+        try:
+            jobs = serp_jobs.fetch({"name": args.search, "query": args.search})
+            print(display.green(f"Found {len(jobs)} postings:"))
+            for j in jobs:
+                loc = ", ".join(j.locations)
+                print(f"  • {display.bold(j.company)} — {j.title} {display.cyan(loc)}")
+                print(f"    {display.dim(j.url)}")
+        except Exception as e:
+            print(display.red(f"Error querying search API: {e}"))
+            print(display.dim("Note: Requires SERP_API_KEY or RAPIDAPI_KEY set in environment."))
+        return 0
 
     if args.list:
         print(display.bold(f"\nConfigured Scrapers ({len(COMPANIES)} companies):"))

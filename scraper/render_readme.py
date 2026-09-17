@@ -13,7 +13,7 @@ AI/ML, Data, Full-Stack, Backend, Frontend, Mobile, QA/SDET, and Security roles 
 {n_companies} top tech companies, GCCs, and high-growth Indian unicorns. Scraped directly
 from official careers APIs every 3 hours by GitHub Actions.
 
-🌐 **Live Web Dashboard: [vishnunandan555.github.io/internship-tracker](https://vishnunandan555.github.io/internship-tracker/)**
+🌐 **Live Web Dashboard: [vishnunandan555.github.io/internship-tracker](https://vishnunandan555.github.io/internship-tracker/)** · 🛠️ **Developer & CLI Guide: [GUIDE.md](GUIDE.md)**
 
 > 🕐 Last updated: **{updated}** · 📌 **{n_open}** open internships
 > · 🆕 = added in the last {new_days} days
@@ -27,12 +27,14 @@ FOOTER = """
 
 ## ⚙️ How This Works
 
-A [Python scraper](scraper/) runs in GitHub Actions every 3 hours:
-1. Queries official careers APIs (Workday, Greenhouse, SmartRecruiters, Lever, Eightfold, Phenom, and in-house REST APIs).
-2. Filters for active internships, co-ops, and trainee software roles ([scraper/categories.py](scraper/categories.py)).
+A high-speed concurrent [Python scraper](scraper/) runs in GitHub Actions every 3 hours:
+1. Concurrently queries official careers APIs (Workday, Greenhouse, SmartRecruiters, Lever, Eightfold, Phenom, Oracle HCM, and custom REST APIs).
+2. Filters for active internships, co-ops, and trainee engineering roles ([scraper/categories.py](scraper/categories.py)).
 3. Strictly filters locations within India tech hubs (Bengaluru, Hyderabad, Pune, Delhi-NCR, Chennai, Mumbai, and Remote India) ([scraper/regions.py](scraper/regions.py)).
 4. Diffs against [`data/jobs.json`](data/jobs.json) to track additions, closures, and re-openings.
 5. Auto-updates this `README.md` and the interactive web dashboard in `docs/`.
+
+📖 **Looking for CLI usage, ATS auto-detection, architecture, or adding a company? Read the [Developer & System Guide (GUIDE.md)](GUIDE.md).**
 
 Found an issue or want to request a company? Feel free to open an issue or pull request!
 """
