@@ -2,12 +2,12 @@
 
 Auto-updated list of **open tech & software-engineering internships in India** —
 AI/ML, Data, Full-Stack, Backend, Frontend, Mobile, QA/SDET, and Security roles — at
-42 top tech companies, GCCs, and high-growth Indian unicorns. Scraped directly
-from official careers APIs every 3 hours by GitHub Actions.
+41 top tech companies, GCCs, and high-growth Indian unicorns. Scraped directly
+from official careers APIs daily (at 00:00 UTC) by GitHub Actions.
 
-🌐 **Live Web Dashboard: [vishnunandan555.github.io/internship-tracker](https://vishnunandan555.github.io/internship-tracker/)** · 🛠️ **[GUIDE.md](GUIDE.md)** · 🚀 **[ROADMAP.md](ROADMAP.md)**
+🌐 **Live Web Dashboard: [vishnunandan555.github.io/internship-tracker](https://vishnunandan555.github.io/internship-tracker/)** · 🛠️ **[GUIDE.md](GUIDE.md)** · 🚀 **[ROADMAP.md](ROADMAP.md)** · 📋 **[Scrape Logs](logs/)**
 
-> 🕐 Last updated: **2026-09-17 16:30:06 UTC** · 📌 **14** open internships
+> 🕐 Last updated: **2026-09-17 16:46:17 UTC** · 📌 **15** open internships
 > · 🆕 = added in the last 7 days
 
 ⭐ Star this repository to keep track of new openings — or watch *Activity* for commits titled “new internship(s)”.
@@ -28,7 +28,7 @@ from official careers APIs every 3 hours by GitHub Actions.
 | GitHub | — |
 | [Google](#google) | **2** |
 | Groww | — |
-| HPE | — |
+| [HPE](#hpe) | **1** |
 | InMobi | — |
 | Intel | — |
 | JPMorgan Chase | — |
@@ -37,7 +37,7 @@ from official careers APIs every 3 hours by GitHub Actions.
 | [Microsoft](#microsoft) | **4** |
 | MongoDB | — |
 | Morgan Stanley | — |
-| [NVIDIA](#nvidia) | **1** |
+| NVIDIA | — |
 | Netflix | — |
 | Nokia | — |
 | Oracle | — |
@@ -52,8 +52,7 @@ from official careers APIs every 3 hours by GitHub Actions.
 | Snowflake | — |
 | [Stripe](#stripe) | **1** |
 | Swiggy | — |
-| Target | — |
-| Walmart Global Tech | — |
+| [Walmart Global Tech](#walmart-global-tech) | **1** |
 | Wells Fargo | — |
 | Zeta | — |
 | American Express | *careers site sits behind Akamai bot defense returning 403 to automated clients* |
@@ -75,6 +74,7 @@ from official careers APIs every 3 hours by GitHub Actions.
 | Postman | *retired public Greenhouse board; careers site runs custom Next.js frontend without public search API* |
 | SAP | *SuccessFactors career site requires authenticated recruiter operators; no public search API* |
 | Siemens | *careers site runs on Avature global portal without public JSON search API; requires interactive session* |
+| Target | *US retail company with no India engineering center; scraper returns 0 India listings across 300+ postings* |
 | Tata Consultancy Services | *student tech hiring conducted exclusively through TCS NextStep / National Qualifier Test (NQT) campus portal* |
 | Tesla | *careers site sits behind Akamai bot protection returning 403 to non-browser clients* |
 | Uber | *careers search API sits behind Cloudflare bot protection returning 403 to non-browser clients; needs headless browser* |
@@ -91,6 +91,12 @@ from official careers APIs every 3 hours by GitHub Actions.
 | [Software Engineering PhD Intern, Summer 2027](https://www.google.com/about/careers/applications/jobs/results/109976286780105414) 🆕 | Software | Bengaluru | 2026-09-07 | 2026-09-17 |
 | [Silicon Engineering Intern, PhD, Summer 2027](https://www.google.com/about/careers/applications/jobs/results/109375266236572358) 🆕 | Hardware/Silicon | Bengaluru | 2026-09-07 | 2026-09-17 |
 
+## HPE
+
+| Role | Category | Hub / Location | Posted | First seen |
+|---|---|---|---|---|
+| [College Intern](https://careers.hpe.com/us/en/job/1211843) 🆕 | Software | Bengaluru | 2026-09-01 | 2026-09-17 |
+
 ## Microsoft
 
 | Role | Category | Hub / Location | Posted | First seen |
@@ -99,12 +105,6 @@ from official careers APIs every 3 hours by GitHub Actions.
 | [Software Engineering INTERN](https://apply.careers.microsoft.com/careers/job/1970393556911730) 🆕 | Software | India (Multiple/Other) | 2026-08-28 | 2026-09-17 |
 | [Research Sciences INTERN](https://apply.careers.microsoft.com/careers/job/1970393556971804) 🆕 | AI/ML | Bengaluru | 2026-08-20 | 2026-09-17 |
 | [Research Sciences INTERN](https://apply.careers.microsoft.com/careers/job/1970393556641091) 🆕 | AI/ML | India (Multiple/Other) | 2026-02-27 | 2026-09-17 |
-
-## NVIDIA
-
-| Role | Category | Hub / Location | Posted | First seen |
-|---|---|---|---|---|
-| [PhD Intern, AI ML in Wireless L1/L2 - Fall 2026](https://nvidia.wd5.myworkdayjobs.com/en-US/NVIDIAExternalCareerSite/job/India-Bengaluru/PhD-Intern--AI-ML-in-Wireless-L1-L2---Fall-2026_JR2024423) 🆕 | AI/ML | Bengaluru | 2026-08-31 | 2026-09-17 |
 
 ## Qualcomm
 
@@ -133,17 +133,23 @@ from official careers APIs every 3 hours by GitHub Actions.
 |---|---|---|---|---|
 | [Software Engineer, Intern](https://stripe.com/jobs/search?gh_jid=8031833) 🆕 | Software | Bengaluru | 2026-07-10 | 2026-09-17 |
 
+## Walmart Global Tech
+
+| Role | Category | Hub / Location | Posted | First seen |
+|---|---|---|---|---|
+| [(IND) Grad Intern - No Work Experience](https://walmart.wd504.myworkdayjobs.com/en-US/WalmartExternal/job/IN-KA-BANGALORE-Home-Office-Building-10/XMLNAME--IND--Grad-Intern---No-Work-Experience_R-2557935) 🆕 | Software | Bengaluru | — | 2026-09-17 |
+
 
 ---
 
 ## ⚙️ How This Works
 
-A high-speed concurrent [Python scraper](scraper/) runs in GitHub Actions every 3 hours:
+A high-speed concurrent [Python scraper](scraper/) runs in GitHub Actions daily at 00:00 UTC:
 1. Concurrently queries official careers APIs (Workday, Greenhouse, SmartRecruiters, Lever, Eightfold, Phenom, Oracle HCM, and custom REST APIs).
 2. Filters for active internships, co-ops, and trainee engineering roles ([scraper/categories.py](scraper/categories.py)).
 3. Strictly filters locations within India tech hubs (Bengaluru, Hyderabad, Pune, Delhi-NCR, Chennai, Mumbai, and Remote India) ([scraper/regions.py](scraper/regions.py)).
 4. Diffs against [`data/jobs.json`](data/jobs.json) to track additions, closures, and re-openings.
-5. Auto-updates this `README.md` and the interactive web dashboard in `docs/`.
+5. Auto-updates this `README.md`, execution logs in [`logs/`](logs/), and the interactive web dashboard in `docs/`.
 
 📖 **Looking for CLI usage, ATS auto-detection, architecture, or adding a company? Read the [Developer & System Guide (GUIDE.md)](GUIDE.md).**
 

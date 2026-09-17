@@ -1,118 +1,138 @@
-# 🚀 Product Roadmap & Upcoming Features
+# Roadmap
 
-This document tracks planned improvements, community-requested features, and future development milestones for the **India Tech Internships Tracker**.
-
----
-
-## 📌 Progress Summary
-
-- **Completed**: Concurrent ThreadPool scraper engine, CLI interface (`-c`, `-k`, `-d`, `-s`, `-l`), rich terminal dashboard, ATS auto-detector (`scraper/detector.py`), GitHub Actions pip caching, and `GITHUB_STEP_SUMMARY` reporting.
-- **In Progress**: Real-time notifications and student application helper tools.
+Realistic improvements planned for the scraper.
 
 ---
 
-## 🔔 Milestone 1: Instant Real-Time Notifications
+## ✅ Already Shipped / In Progress
 
-Never miss an opening when a company drops a posting at 2 AM.
-
-- [ ] **Telegram Channel / Bot Integration**
-  - Broadcast new listings instantly to a public Telegram channel.
-  - Formatted message with Company, Role, Hub (BLR/HYD/Pune), and a 1-click apply button.
-- [ ] **Discord Webhook Alerts**
-  - Post rich Discord embeds into a `#job-alerts` channel for college and developer Discord servers.
-  - Include role tags (`#software`, `#hardware`, `#aiml`).
-- [ ] **RSS / Atom Feed (`docs/feed.xml`)**
-  - Generate a standardized RSS feed on every scrape run so users can subscribe via Slack RSS, Feedly, or NetNewsWire.
-- [ ] **WhatsApp Community Alerts** (via Twilio or WhatsApp Business Webhook).
+- [x] `--dry-run` flag — show what would be scraped without writing to the DB
+- [x] `--company <name>` flag — re-scrape a single company on demand
+- [x] GitHub Actions: surface new listings in the workflow step summary
+- [ ] Progress bar while scraping (replace per-company lines with a live `tqdm` or `rich` progress bar)
+- [ ] Export snapshot to CSV (`--export csv`)
+- [ ] Skip companies with 0 India listings from the final summary output by default; `--verbose` to show all
+- [ ] GitHub Actions: post new listings as a comment on the workflow run summary instead of just the step summary
 
 ---
 
-## 🎯 Milestone 2: Smart Eligibility & Batch Classifier
+## 🔥 Quick Wins (High Impact, Low Effort)
 
-Cut down noise by highlighting exactly which graduation year each role targets.
+### 1. Atomic File Writes in `store.py`
+**Why:** `store.save()` writes directly to `jobs.json`. If the process crashes or is killed mid-write, the file is left corrupt and every subsequent run will fail to load state — silently losing historical data.  
+**How:** Write to a `.tmp` file first, then call `os.replace(tmp_path, DATA_PATH)`. This is an atomic operation on all POSIX systems and takes 3 lines of code.
 
-- [ ] **Graduation Year Extraction (2026 / 2027 / 2028)**
-  - Parse job titles and descriptions with regex to extract target graduation years (e.g. Qualcomm's `Intern_2027_SW`).
-  - Add a dedicated `Batch: 2027` badge on the web UI and in `README.md`.
-- [ ] **Degree & Year Level Tagging**
-  - Distinguish between **Pre-final Year (Summer 2026/2027)** vs **Final Year (6-month / Jan–June Co-op)** vs **Fresh Graduate Internships**.
-  - Tag degree requirements (`B.Tech / B.E.`, `M.Tech / M.S.`, `Dual Degree`, `MCA`, `PhD`).
-- [ ] **Pre-requisite / CGPA Flagging**
-  - Flag postings with hard CGPA thresholds (e.g., "7.5+ CGPA required" or "No active backlogs").
-
----
-
-## 💻 Milestone 3: Interactive Web Dashboard Superpowers
-
-Transform the static web page (`docs/index.html`) into a student command center.
-
-- [ ] **Personal "Applied / Starred" Tracker (Local Storage)**
-  - Add a "⭐ Save" and "✅ Mark as Applied" button next to each job.
-  - Persist state in browser `localStorage` — no login, database, or accounts required.
-- [ ] **Application Deadline & Age Indicators**
-  - Show how many hours/days ago the posting was detected (e.g., `⚡ Posted 4 hours ago`).
-  - Urgency indicators for high-volume companies (Google/Microsoft) that close within 48–72 hours.
-- [ ] **1-Click Share Card Generator**
-  - Generate clean preview image / text cards for sharing openings on LinkedIn, X (Twitter), or WhatsApp groups.
-- [ ] **PWA (Progressive Web App) Support**
-  - Add web manifest and service worker so students can "Install" the tracker as a native app on Android/iOS.
+```python
+# store.py
+tmp = DATA_PATH + ".tmp"
+with open(tmp, "w") as fh:
+    json.dump(state, fh, indent=2, sort_keys=True)
+    fh.write("\n")
+os.replace(tmp, DATA_PATH)
+```
 
 ---
 
-## 🤝 Milestone 4: 1-Click Referral Link Generator
+### 2. Retry Logic & Exponential Backoff in `http.py`
+**Why:** Several companies (Oracle 40s, Morgan Stanley 59s) show high latency consistent with rate-limiting. A single transient timeout marks the whole company as `[FAIL]` and leaves its existing jobs untouched — meaning a brief network hiccup silently prevents closures from being detected.  
+**How:** Add a retry decorator using `tenacity` (already a common dep) or a manual loop with jitter:
 
-Getting an employee referral increases interview rates by 4x.
-
-- [ ] **Smart LinkedIn Referral Search Button**
-  - Add a "Find Referral" button on each listing that dynamically opens a pre-filtered LinkedIn search:
-    `https://www.linkedin.com/search/results/people/?keywords={Company}+Software+Engineer+{City}`
-  - Includes quick-copy cold-outreach message templates tailored to university students.
-- [ ] **Alumni Connect Helper**
-  - Allow users to enter their university name (e.g., `IIT Bombay`, `BITS Pilani`, `NIT Trichy`, `VIT`, `IIIT`) to filter LinkedIn search results to their college alumni working at that company.
-
----
-
-## 💰 Milestone 5: Crowd-Sourced Stipend & Compensation Benchmarks
-
-Salary transparency helps students make informed decisions.
-
-- [ ] **Stipend Insights Column**
-  - Integrate verified and community-reported India internship stipends (e.g., Google: ₹1.1L–₹1.25L/mo, Uber: ₹1.6L/mo, Microsoft: ₹1.25L/mo, Razorpay: ₹60k/mo, Swiggy: ₹50k/mo).
-- [ ] **Perks & Relocation Indicators**
-  - Tag benefits: Free food, company accommodation / corporate transit, travel reimbursement, hardware allowance.
-- [ ] **PPO (Pre-Placement Offer) Conversion Rate Ratings**
-  - Historical student ratings on how often the 2-month summer internship converts into a full-time SWE offer.
+```python
+# http.py — wrap request_text with up to 3 retries, exponential backoff
+for attempt in range(3):
+    try:
+        return session.get(url, timeout=15).text
+    except requests.RequestException:
+        if attempt == 2:
+            raise
+        time.sleep(2 ** attempt + random.uniform(0, 1))
+```
 
 ---
 
-## 🛡️ Milestone 6: Bot Bypass & Enterprise Scraper Expansion
+### 3. New-Grad / Fresher Detection in `models.py`
+**Why:** The current `INTERN_RE` regex only matches `intern`, `internship`, and `co-op`. Titles like `"Graduate Hire"`, `"New Grad"`, `"Fresher"`, `"Associate Engineer – 2027"`, or `"Campus Hire"` are silently dropped. GitHub (78 postings → 0 interns), Swiggy (98 → 0), and InMobi (61 → 0) are likely victims of this.  
+**How:** Add a secondary regex and a `looks_like_new_grad()` method, or extend `INTERN_RE`:
 
-Bring the remaining 25 "Unsupported" companies into the automated feed.
+```python
+NEWGRAD_RE = re.compile(
+    r"(?:new[\s\-]?grad|fresher|campus|graduate\s+hire|entry[\s\-]?level"
+    r"|associate\s+engineer|20(?:26|27)\s+grad)",
+    re.IGNORECASE,
+)
 
-- [ ] **SerpApi / Google Jobs Scheduled Worker**
-  - Automatically query Google Jobs API for companies with closed ATS or anti-bot defenses (Flipkart, Atlassian, Uber, Zepto, D. E. Shaw).
-- [ ] **Headless Browser Runner (Playwright Sidecar)**
-  - Run an isolated Playwright crawler to solve Cloudflare Turnstile challenges for Apple (`jobs.apple.com`), ByteDance, and Tesla.
-- [ ] **Campus Drive Aggregator (Hackerearth / Unstop / Superset)**
-  - Track open-to-all national hiring challenges (Flipkart GRiD, Tata TCS NQT, Infosys Springboard, Google Girl Hackathon, Amazon ML Challenge).
-
----
-
-## 🧠 Milestone 7: Interview Prep & LeetCode Intelligence
-
-Help students transition from finding an internship to clearing the rounds.
-
-- [ ] **Company Interview Tags & Questions**
-  - Direct links to top tagged LeetCode questions for that company (e.g., Qualcomm DSA & OS/C++ tags, Google Graph/DP tags).
-- [ ] **Online Assessment (OA) Pattern Guides**
-  - Short summary of each company's typical screening:
-    - Number of coding problems (e.g., 2 LeetCode Mediums in 60 mins).
-    - Platform used (HackerRank, Codility, TestGorilla).
-    - CS Fundamentals topics tested (OS, DBMS, OOPs, Computer Networks).
+def looks_like_internship(self) -> bool:
+    if self.is_intern is not None:
+        return self.is_intern
+    return bool(INTERN_RE.search(self.title) or NEWGRAD_RE.search(self.title))
+```
 
 ---
 
-## 💡 Suggesting New Features
+### 4. Configurable Notifications on New Listings
+**Why:** The scraper already detects `added` listings — but discovery is passive. You only find out by re-running the CLI or checking the README. A push notification makes the signal actionable.  
+**How:** Add an optional `--notify` flag. On new listings, POST to a Telegram bot (single `requests.post` call, needs only `BOT_TOKEN` + `CHAT_ID` env vars), or fall back to `smtplib` email. Wire it into `main.py` after `store.merge()`.
 
-Have an idea that isn't listed here?
-- Open a discussion or feature request in the **[GitHub Issues](https://github.com/vishnunandan555/internship-tracker/issues)** tab!
+---
+
+## ⚙️ Medium-Effort Improvements
+
+### 5. Expose Truncated Results (999-posting Sentinel)
+**Why:** Oracle and JPMorgan both return exactly **999 postings** — this is almost certainly an API/pagination cap, not the real count. The adapter silently stops paginating and may miss internship listings that appear on later pages. This is a silent correctness bug.  
+**How:** Each adapter should return a `(jobs, truncated: bool)` tuple or set a `truncated` field on the result. `main.py` should print a `⚠️ TRUNCATED` warning next to companies that hit the cap and log it to `health.json`. Separately, fix the pagination logic in `oracle_hcm.py` and `workday.py` to paginate until exhausted.
+
+---
+
+### 6. ATS Health Tracking — Consecutive Failure Detection
+**Why:** `health.json` only records pass/fail for the last run. If an adapter silently breaks (e.g., the ATS changed its API schema), it will keep "succeeding" with 0 results, or failing, for weeks before anyone notices.  
+**How:** Persist a `consecutive_failures` counter per company in `health.json`. Increment on fail, reset on success. In `main.py`, emit a `⚠️ STALE` warning if any company has ≥3 consecutive failures or if a large company (>50 historical postings) suddenly returns 0.
+
+```json
+// health.json (proposed schema addition)
+{
+  "companies": {
+    "Oracle": { "consecutive_failures": 0, "last_success": "2026-09-17", "last_postings": 999 }
+  }
+}
+```
+
+---
+
+### 7. `--list` Shows India History
+**Why:** `--list` shows adapter names but not which companies have ever yielded India results. When debugging or onboarding new companies, knowing that "Intel has returned India listings before but GitHub never has" is immediately useful.  
+**How:** Load `jobs.json` in the `--list` handler, group by company, and annotate each entry with `✓ N India jobs (last seen YYYY-MM-DD)` or `✗ no India history`.
+
+---
+
+## 🏗️ Larger Architectural Changes
+
+### 8. Async I/O: `asyncio` + `httpx` Instead of `ThreadPoolExecutor`
+**Why:** The current thread pool blocks OS threads on network I/O. With 42 companies and `--workers 10`, at most 10 are truly concurrent. Slow scrapers (Amazon 28s, Oracle 40s, Microsoft 51s) block slots. `asyncio` with `httpx.AsyncClient` allows hundreds of concurrent requests without thread overhead — the 95s total runtime could likely drop to ~60s.  
+**How:** Replace `ThreadPoolExecutor` in `main.py` with `asyncio.gather()`. Convert all adapters to `async def fetch(cfg)` using `await client.get(url)`. Use `httpx.AsyncClient` with a shared client and connection pool. This is the largest refactor but the gains compound with every new company added.
+
+---
+
+### 9. Incremental / Skip-Unchanged Scraping
+**Why:** Every run re-fetches all 42 companies unconditionally. Most companies change infrequently — running the full scrape every 6 hours is wasteful and increases the chance of being rate-limited.  
+**How:** Two approaches:
+- **HTTP-level:** Send `If-None-Match` / `If-Modified-Since` headers where the ATS supports them; skip parsing on `304 Not Modified`.
+- **App-level:** Track `last_changed` per company in `health.json`. If a company has had 0 changes in the last N runs, scrape it less frequently (e.g., once per day instead of every 6 hours).
+
+---
+
+### 10. Config-as-Data: Move `companies.py` to `companies.yaml`
+**Why:** Adding a new company currently requires editing Python source, knowing which adapter to import, and understanding the config dict schema. This creates friction and makes the project hard for contributors to extend without understanding the codebase.  
+**How:** Define companies in a `companies.yaml` file:
+
+```yaml
+- name: Google
+  adapter: google
+  # adapter-specific keys passed through as cfg
+  client_id: "..."
+
+- name: Greenhouse Company
+  adapter: greenhouse
+  token: "sometoken"
+```
+
+At startup, load the YAML and resolve the adapter string to a module via a registry dict (`{"greenhouse": greenhouse.fetch, ...}`). Adding a new company becomes a one-line YAML edit with zero Python knowledge required.

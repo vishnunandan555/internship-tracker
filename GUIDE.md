@@ -234,6 +234,15 @@ Tracks scraper uptime and error diagnostics across runs:
 }
 ```
 
+### `logs/` Execution Logs
+Every scrape run generates logs committed directly into the repository:
+- **`logs/scrape_full.log`**: Exhaustive technical log of the latest scrape. Includes exact timestamps, execution times per company, raw postings count, location filtering details, HTTP errors, and full stack traces.
+- **`logs/scrape_summary.log`**: Concise, scannable summary of the latest scrape. Shows execution timestamp, overall success/failure count, active India listings, a clean list of newly discovered internships (with URLs and locations), and closed listings.
+- **`logs/history.log`**: Append-only audit log tracking daily execution history over time:
+  ```text
+  [2026-09-17 00:00:00 UTC] OK: 40/42 | Active: 14 | +3 new, -0 closed | Runtime: 17.5s
+  ```
+
 ---
 
 ## 7. Categories & Location Filters
@@ -255,9 +264,9 @@ Tracks scraper uptime and error diagnostics across runs:
 
 ## 8. Automated CI/CD (GitHub Actions)
 
-The tracker runs completely autonomously via `.github/workflows/scrape.yml`:
-- **Trigger**: Every 3 hours via GitHub Actions `cron: '0 */3 * * *'` + manual `workflow_dispatch`.
-- **Concurrency**: Parallel execution in GitHub's Linux runner.
+The tracker runs completely autonomously via `.github/workflows/update.yml`:
+- **Trigger**: Daily at 00:00 UTC (05:30 AM IST) via GitHub Actions `cron: '0 0 * * *'` + manual `workflow_dispatch` (with options for target company, keyword filter, workers, and dry runs).
+- **Concurrency**: Parallel execution in GitHub's Linux runner (pip cached).
 - **Auto-Commit**: If new internships are found or closed, the bot commits directly with:
   `Automated scrape: +X added, -Y closed [skip ci]`
 - **Pages Sync**: The workflow deploys `docs/index.html` and `docs/jobs.json` directly to GitHub Pages.

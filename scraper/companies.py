@@ -54,6 +54,7 @@ UNSUPPORTED = {
     # Other Notable
     "ByteDance": "job-search API rejects requests without browser client signature; needs headless browser",
     "LinkedIn": "careers site only links to linkedin.com/jobs, which is authwalled and prohibits automated scraping",
+    "Target": "US retail company with no India engineering center; scraper returns 0 India listings across 300+ postings",
     "Tesla": "careers site sits behind Akamai bot protection returning 403 to non-browser clients",
 }
 
@@ -114,8 +115,6 @@ COMPANIES = [
     {"name": "Snowflake", "fetch": phenom.fetch, "host": "careers.snowflake.com",
      "job_url": "https://careers.snowflake.com/us/en/job/{id}"},
     {"name": "GitHub", "fetch": github_careers.fetch},
-    {"name": "Target", "fetch": workday.fetch,
-     "host": "target.wd5.myworkdayjobs.com", "site": "targetcareers"},
 
     # --- Tier D: Finance / Enterprise Engineering Centers --------------------
     {"name": "JPMorgan Chase", "fetch": oracle_hcm.fetch,

@@ -19,6 +19,7 @@ import time
 from . import display, store
 from .categories import categorize
 from .companies import COMPANIES, UNSUPPORTED
+from .logger import ScrapeLogger
 from .regions import get_city_tag, is_india_job
 from .render_readme import render
 
@@ -72,6 +73,9 @@ def run(only_companies=None, keyword=None, dry_run=False, workers=8):
     else:
         print()
 
+    logger = ScrapeLogger()
+    logger.log(f"Starting scrape for {len(targets)} companies with {workers} workers (dry_run={dry_run}, keyword={keyword})")
+
     all_jobs, succeeded, failed = [], set(), {}
     total_start_t = time.perf_counter()
 
@@ -85,17 +89,29 @@ def run(only_companies=None, keyword=None, dry_run=False, workers=8):
                 succeeded.add(name)
                 all_jobs.extend(in_india)
                 print(display.status_ok(name, duration, n_fetched, n_interns, len(in_india)))
+                logger.log(f"[OK]   {name:<24} ({duration:4.1f}s) -> {n_fetched:>4} postings, {n_interns:>2} interns, {len(in_india)} India")
             else:
                 failed[name] = str(err)
                 print(display.status_fail(name, duration, err))
+                logger.log(f"[FAIL] {name:<24} ({duration:4.1f}s) -> ERROR: {err}", level="ERROR")
 
     total_duration = time.perf_counter() - total_start_t
 
     if not succeeded:
         print(display.red("\nEvery attempted scraper failed — aborting without touching state."))
+        if not dry_run:
+            logger.save(
+                total_duration=total_duration,
+                succeeded=succeeded,
+                failed=failed,
+                added=[],
+                closed=[],
+                reopened=[],
+                all_india_jobs=[],
+            )
         return 1
 
-    # In dry-run mode, display stats and exit without modifying database
+    # In dry-run mode, display stats and exit without modifying database or production logs
     if dry_run:
         display.print_dashboard(
             total_duration=total_duration,
@@ -139,6 +155,17 @@ def run(only_companies=None, keyword=None, dry_run=False, workers=8):
         json.dump({"succeeded": sorted(succeeded), "failed": failed},
                   fh, indent=2, sort_keys=True)
         fh.write("\n")
+
+    # Save dual-tier logs to logs/ folder
+    logger.save(
+        total_duration=total_duration,
+        succeeded=succeeded,
+        failed=failed,
+        added=added,
+        closed=closed,
+        reopened=reopened,
+        all_india_jobs=all_jobs,
+    )
 
     # Display full dashboard summary
     display.print_dashboard(

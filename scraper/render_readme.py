@@ -11,9 +11,9 @@ HEADER = """\
 Auto-updated list of **open tech & software-engineering internships in India** —
 AI/ML, Data, Full-Stack, Backend, Frontend, Mobile, QA/SDET, and Security roles — at
 {n_companies} top tech companies, GCCs, and high-growth Indian unicorns. Scraped directly
-from official careers APIs every 3 hours by GitHub Actions.
+from official careers APIs daily (at 00:00 UTC) by GitHub Actions.
 
-🌐 **Live Web Dashboard: [vishnunandan555.github.io/internship-tracker](https://vishnunandan555.github.io/internship-tracker/)** · 🛠️ **[GUIDE.md](GUIDE.md)** · 🚀 **[ROADMAP.md](ROADMAP.md)**
+🌐 **Live Web Dashboard: [vishnunandan555.github.io/internship-tracker](https://vishnunandan555.github.io/internship-tracker/)** · 🛠️ **[GUIDE.md](GUIDE.md)** · 🚀 **[ROADMAP.md](ROADMAP.md)** · 📋 **[Scrape Logs](logs/)**
 
 > 🕐 Last updated: **{updated}** · 📌 **{n_open}** open internships
 > · 🆕 = added in the last {new_days} days
@@ -27,12 +27,12 @@ FOOTER = """
 
 ## ⚙️ How This Works
 
-A high-speed concurrent [Python scraper](scraper/) runs in GitHub Actions every 3 hours:
+A high-speed concurrent [Python scraper](scraper/) runs in GitHub Actions daily at 00:00 UTC:
 1. Concurrently queries official careers APIs (Workday, Greenhouse, SmartRecruiters, Lever, Eightfold, Phenom, Oracle HCM, and custom REST APIs).
 2. Filters for active internships, co-ops, and trainee engineering roles ([scraper/categories.py](scraper/categories.py)).
 3. Strictly filters locations within India tech hubs (Bengaluru, Hyderabad, Pune, Delhi-NCR, Chennai, Mumbai, and Remote India) ([scraper/regions.py](scraper/regions.py)).
 4. Diffs against [`data/jobs.json`](data/jobs.json) to track additions, closures, and re-openings.
-5. Auto-updates this `README.md` and the interactive web dashboard in `docs/`.
+5. Auto-updates this `README.md`, execution logs in [`logs/`](logs/), and the interactive web dashboard in `docs/`.
 
 📖 **Looking for CLI usage, ATS auto-detection, architecture, or adding a company? Read the [Developer & System Guide (GUIDE.md)](GUIDE.md).**
 
