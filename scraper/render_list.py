@@ -5,7 +5,6 @@ from typing import Dict, Iterable, Optional
 from .companies import COMPANIES, UNSUPPORTED
 
 LIST_PATHS = [
-    os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "LIST.md")),
     os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "LIST.md")),
 ]
 IST = timezone(timedelta(hours=5, minutes=30))
