@@ -154,6 +154,52 @@
       "title": "Interim Engineering Intern_2027_SW",
       "url": "https://careers.qualcomm.com/careers/job/446719785836?domain=qualcomm.com"
     },
+    "rubrik:8166523": {
+      "active": true,
+      "category": "Software",
+      "city_tag": "Bengaluru",
+      "company": "Rubrik",
+      "external_id": "8166523",
+      "first_seen": "2026-09-17",
+      "last_seen": "2026-09-17",
+      "locations": [
+        "Bangalore"
+      ],
+      "posted": "2026-09-06",
+      "title": "Software Engineer - Winter Intern",
+      "url": "https://www.rubrik.com/company/careers/departments/job.8166523?gh_jid=8166523"
+    },
+    "rubrik:8166537": {
+      "active": true,
+      "category": "Software",
+      "city_tag": "Bengaluru",
+      "company": "Rubrik",
+      "external_id": "8166537",
+      "first_seen": "2026-09-17",
+      "last_seen": "2026-09-17",
+      "locations": [
+        "Bangalore"
+      ],
+      "posted": "2026-09-06",
+      "title": "Software Engineer (CPD) - Winter Intern",
+      "url": "https://www.rubrik.com/company/careers/departments/job.8166537?gh_jid=8166537"
+    },
+    "salesforce:JR337715": {
+      "active": true,
+      "category": "Software",
+      "city_tag": "Bengaluru",
+      "company": "Salesforce",
+      "external_id": "JR337715",
+      "first_seen": "2026-09-17",
+      "last_seen": "2026-09-17",
+      "locations": [
+        "2 Locations",
+        "India, Bangalore"
+      ],
+      "posted": null,
+      "title": "Summer 2027 Intern - Software Engineer",
+      "url": "https://salesforce.wd12.myworkdayjobs.com/en-US/External_Career_Site/job/India---Bangalore/Summer-2027-Intern---Software-Engineer_JR337715"
+    },
     "stripe:8031833": {
       "active": true,
       "category": "Software",
@@ -170,5 +216,5 @@
       "url": "https://stripe.com/jobs/search?gh_jid=8031833"
     }
   },
-  "updated_at": "2026-09-17T16:22:39Z"
+  "updated_at": "2026-09-17T16:30:06Z"
 }

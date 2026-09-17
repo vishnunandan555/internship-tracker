@@ -77,12 +77,20 @@ def fetch(cfg):
         for p in postings:
             path = p.get("externalPath", "")
             bullet = p.get("bulletFields") or []
+            loc_raw = p.get("locationsText", "")
+            locs = [loc_raw] if loc_raw else []
+            if path:
+                parts = path.strip("/").split("/")
+                if len(parts) >= 2 and parts[0] == "job":
+                    slug_loc = parts[1].replace("---", ", ").replace("-", " ")
+                    if slug_loc and slug_loc not in locs:
+                        locs.append(slug_loc)
             jobs.append(Job(
                 company=cfg["name"],
                 external_id=str(bullet[0]) if bullet else path,
                 title=p.get("title", ""),
                 url="https://{}/en-US/{}{}".format(host, site, path),
-                locations=[p.get("locationsText", "")],
+                locations=locs,
                 posted=_posted_date(p.get("postedOn")),
             ))
         offset += PAGE

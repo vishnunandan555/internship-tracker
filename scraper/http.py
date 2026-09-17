@@ -8,9 +8,9 @@ USER_AGENT = (
     "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
 )
 
-DEFAULT_TIMEOUT = 30
+DEFAULT_TIMEOUT = 15
 RETRIES = 3
-BACKOFF_SECONDS = 5
+BACKOFF_SECONDS = 2
 
 
 def request_json(method, url, *, headers=None, params=None, json_body=None,
@@ -37,3 +37,30 @@ def request_json(method, url, *, headers=None, params=None, json_body=None,
                 time.sleep(BACKOFF_SECONDS * (attempt + 1))
     raise RuntimeError("request failed after {} attempts: {} {} ({})".format(
         RETRIES, method, url, last_err))
+
+
+def request_text(method, url, *, headers=None, params=None, data=None,
+                 cookies=None, session=None, timeout=DEFAULT_TIMEOUT):
+    """Perform a request expecting text/HTML response. Retries on 5xx/429/network errors."""
+    h = {"User-Agent": USER_AGENT, "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"}
+    if headers:
+        h.update(headers)
+    client = session or requests
+    last_err = None
+    for attempt in range(RETRIES):
+        try:
+            resp = client.request(
+                method, url, headers=h, params=params,
+                data=data, cookies=cookies, timeout=timeout,
+            )
+            if resp.status_code in (429, 500, 502, 503, 504):
+                raise requests.HTTPError("HTTP {}".format(resp.status_code), response=resp)
+            resp.raise_for_status()
+            return resp.text
+        except requests.RequestException as err:
+            last_err = err
+            if attempt < RETRIES - 1:
+                time.sleep(BACKOFF_SECONDS * (attempt + 1))
+    raise RuntimeError("request failed after {} attempts: {} {} ({})".format(
+        RETRIES, method, url, last_err))
+

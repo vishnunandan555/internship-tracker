@@ -2,12 +2,12 @@
 
 Auto-updated list of **open tech & software-engineering internships in India** —
 AI/ML, Data, Full-Stack, Backend, Frontend, Mobile, QA/SDET, and Security roles — at
-40 top tech companies, GCCs, and high-growth Indian unicorns. Scraped directly
+42 top tech companies, GCCs, and high-growth Indian unicorns. Scraped directly
 from official careers APIs every 3 hours by GitHub Actions.
 
 🌐 **Live Web Dashboard: [vishnunandan555.github.io/internship-tracker](https://vishnunandan555.github.io/internship-tracker/)**
 
-> 🕐 Last updated: **2026-09-17 16:22:39 UTC** · 📌 **11** open internships
+> 🕐 Last updated: **2026-09-17 16:30:06 UTC** · 📌 **14** open internships
 > · 🆕 = added in the last 7 days
 
 ⭐ Star this repository to keep track of new openings — or watch *Activity* for commits titled “new internship(s)”.
@@ -45,7 +45,9 @@ from official careers APIs every 3 hours by GitHub Actions.
 | PhonePe | — |
 | [Qualcomm](#qualcomm) | **3** |
 | Razorpay | — |
-| Salesforce | — |
+| Red Hat | — |
+| [Rubrik](#rubrik) | **2** |
+| [Salesforce](#salesforce) | **1** |
 | ServiceNow | — |
 | Snowflake | — |
 | [Stripe](#stripe) | **1** |
@@ -63,6 +65,7 @@ from official careers APIs every 3 hours by GitHub Actions.
 | D. E. Shaw | *campus-only hiring program for Indian engineering colleges (IIT/BITS/NIT)* |
 | Deloitte | *South Asia career portal runs on closed SAP SuccessFactors infrastructure; routes graduate hiring via campus* |
 | Dream11 | *uses Dream Sports proprietary careers portal without public search API* |
+| Faveo | *careers site runs on Zoho Recruit India portal without open unauthenticated REST API* |
 | Flipkart | *careers site sits behind enterprise bot defense and routes student hiring via campus visits & Flipkart GRiD* |
 | Goldman Sachs | *campus & internship portal (tal.net) requires interactive SSO / browser session* |
 | HP | *careers portal sits behind Cloudflare bot protection returning 403 to non-browser clients* |
@@ -71,6 +74,7 @@ from official careers APIs every 3 hours by GitHub Actions.
 | LinkedIn | *careers site only links to linkedin.com/jobs, which is authwalled and prohibits automated scraping* |
 | Postman | *retired public Greenhouse board; careers site runs custom Next.js frontend without public search API* |
 | SAP | *SuccessFactors career site requires authenticated recruiter operators; no public search API* |
+| Siemens | *careers site runs on Avature global portal without public JSON search API; requires interactive session* |
 | Tata Consultancy Services | *student tech hiring conducted exclusively through TCS NextStep / National Qualifier Test (NQT) campus portal* |
 | Tesla | *careers site sits behind Akamai bot protection returning 403 to non-browser clients* |
 | Uber | *careers search API sits behind Cloudflare bot protection returning 403 to non-browser clients; needs headless browser* |
@@ -109,6 +113,19 @@ from official careers APIs every 3 hours by GitHub Actions.
 | [Interim Engineering Intern_2027_SW](https://careers.qualcomm.com/careers/job/446719785836?domain=qualcomm.com) 🆕 | Software | Hyderabad | 2026-09-15 | 2026-09-17 |
 | [Interim Engineering Intern_2027_HW](https://careers.qualcomm.com/careers/job/446719784824?domain=qualcomm.com) 🆕 | Hardware/Silicon | Bengaluru | 2026-09-09 | 2026-09-17 |
 | [1 year  Internship_SW_CDC](https://careers.qualcomm.com/careers/job/446717035053?domain=qualcomm.com) 🆕 | Software | Chennai | 2026-02-24 | 2026-09-17 |
+
+## Rubrik
+
+| Role | Category | Hub / Location | Posted | First seen |
+|---|---|---|---|---|
+| [Software Engineer - Winter Intern](https://www.rubrik.com/company/careers/departments/job.8166523?gh_jid=8166523) 🆕 | Software | Bengaluru | 2026-09-06 | 2026-09-17 |
+| [Software Engineer (CPD) - Winter Intern](https://www.rubrik.com/company/careers/departments/job.8166537?gh_jid=8166537) 🆕 | Software | Bengaluru | 2026-09-06 | 2026-09-17 |
+
+## Salesforce
+
+| Role | Category | Hub / Location | Posted | First seen |
+|---|---|---|---|---|
+| [Summer 2027 Intern - Software Engineer](https://salesforce.wd12.myworkdayjobs.com/en-US/External_Career_Site/job/India---Bangalore/Summer-2027-Intern---Software-Engineer_JR337715) 🆕 | Software | Bengaluru | — | 2026-09-17 |
 
 ## Stripe
 

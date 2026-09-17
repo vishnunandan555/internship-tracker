@@ -41,6 +41,8 @@ UNSUPPORTED = {
     "HP": "careers portal sits behind Cloudflare bot protection returning 403 to non-browser clients",
     "Intuit": "careers portal sits behind Radancy search without open public REST API",
     "SAP": "SuccessFactors career site requires authenticated recruiter operators; no public search API",
+    "Siemens": "careers site runs on Avature global portal without public JSON search API; requires interactive session",
+    "Faveo": "careers site runs on Zoho Recruit India portal without open unauthenticated REST API",
     "Uber": "careers search API sits behind Cloudflare bot protection returning 403 to non-browser clients; needs headless browser",
     # Tier D
     "American Express": "careers site sits behind Akamai bot defense returning 403 to automated clients",
@@ -64,7 +66,8 @@ COMPANIES = [
     {"name": "Adobe", "fetch": workday.fetch,
      "host": "adobe.wd5.myworkdayjobs.com", "site": "external_experienced"},
     {"name": "Salesforce", "fetch": workday.fetch,
-     "host": "salesforce.wd12.myworkdayjobs.com", "site": "External_Career_Site"},
+     "host": "salesforce.wd12.myworkdayjobs.com", "site": "External_Career_Site",
+     "search_text": "internship"},
     {"name": "Oracle", "fetch": oracle_hcm.fetch},
     {"name": "NVIDIA", "fetch": workday.fetch,
      "host": "nvidia.wd5.myworkdayjobs.com", "site": "NVIDIAExternalCareerSite"},
@@ -95,6 +98,9 @@ COMPANIES = [
     {"name": "Intel", "fetch": workday.fetch,
      "host": "intel.wd1.myworkdayjobs.com", "site": "External"},
     {"name": "AMD", "fetch": amd.fetch},
+    {"name": "Red Hat", "fetch": workday.fetch,
+     "host": "redhat.wd5.myworkdayjobs.com", "site": "jobs",
+     "search_text": "internship"},
     {"name": "HPE", "fetch": phenom.fetch, "host": "careers.hpe.com",
      "job_url": "https://careers.hpe.com/us/en/job/{id}"},
     {"name": "Broadcom (VMware)", "fetch": workday.fetch,
@@ -126,4 +132,5 @@ COMPANIES = [
     # --- Developer & High-Growth Platforms in India --------------------------
     {"name": "Stripe", "fetch": greenhouse.fetch, "token": "stripe"},
     {"name": "MongoDB", "fetch": greenhouse.fetch, "token": "mongodb"},
+    {"name": "Rubrik", "fetch": greenhouse.fetch, "token": "rubrik"},
 ]
