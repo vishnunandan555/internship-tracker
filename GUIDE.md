@@ -18,6 +18,7 @@ This document explains the internal architecture, scraper engine, CLI commands, 
 8. [Automated CI/CD (GitHub Actions)](#8-automated-cicd-github-actions)
 9. [External API Fallback (Google Jobs / SerpApi)](#9-external-api-fallback-google-jobs--serpapi)
 10. [Troubleshooting & FAQ](#10-troubleshooting--faq)
+11. [Product Roadmap & Upcoming Features (ROADMAP.md)](ROADMAP.md)
 
 ---
 

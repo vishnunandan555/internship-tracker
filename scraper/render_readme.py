@@ -13,7 +13,7 @@ AI/ML, Data, Full-Stack, Backend, Frontend, Mobile, QA/SDET, and Security roles 
 {n_companies} top tech companies, GCCs, and high-growth Indian unicorns. Scraped directly
 from official careers APIs every 3 hours by GitHub Actions.
 
-🌐 **Live Web Dashboard: [vishnunandan555.github.io/internship-tracker](https://vishnunandan555.github.io/internship-tracker/)** · 🛠️ **Developer & CLI Guide: [GUIDE.md](GUIDE.md)**
+🌐 **Live Web Dashboard: [vishnunandan555.github.io/internship-tracker](https://vishnunandan555.github.io/internship-tracker/)** · 🛠️ **[GUIDE.md](GUIDE.md)** · 🚀 **[ROADMAP.md](ROADMAP.md)**
 
 > 🕐 Last updated: **{updated}** · 📌 **{n_open}** open internships
 > · 🆕 = added in the last {new_days} days
