@@ -26,7 +26,7 @@ AI/ML, Data, Full-Stack, Backend, Frontend, Mobile, QA/SDET, and Security roles 
 {n_companies} top tech companies, GCCs, and high-growth Indian unicorns. Scraped directly
 from official careers APIs daily (at 03:00 AM IST) by GitHub Actions.
 
-[![Live Web Dashboard](https://img.shields.io/badge/Live_Dashboard-InternTrack_India-f97316?style=for-the-badge&logo=googlechrome&logoColor=white)](https://vishnunandan555.github.io/internship-tracker/)
+[![Live Web Dashboard](https://img.shields.io/badge/Live_Dashboard-InternTrack_India-f97316?style=for-the-badge&logo=googlechrome&logoColor=white)](https://vishnunandan555.github.io/interntrack-india/)
 [![Tracked Companies](https://img.shields.io/badge/Tracked_Companies-55_Active-2563eb?style=for-the-badge&logo=airplay&logoColor=white)](LIST.md)
 [![Developer Guide](https://img.shields.io/badge/Developer_Guide-GUIDE.md-475569?style=for-the-badge&logo=readme&logoColor=white)](GUIDE.md)
 [![Roadmap](https://img.shields.io/badge/Roadmap-ROADMAP.md-7c3aed?style=for-the-badge&logo=target&logoColor=white)](ROADMAP.md)
@@ -44,8 +44,8 @@ FOOTER = """
 
 ## 🤝 Request a Company or Report an Issue
 
-- **Want a company added?** Check **[LIST.md](LIST.md)** first to see if it is already actively scraped or documented as unsupported. If it's missing, [open a Company Request issue](https://github.com/vishnunandan555/FAANG-2027-Internships-Tracker/issues/new?title=%5BCompany+Request%5D+<Company+Name>) with the company's official career portal URL!
-- **Found a broken link or expired posting?** Please [open a Bug Report issue](https://github.com/vishnunandan555/FAANG-2027-Internships-Tracker/issues/new?title=%5BBug%5D+<Issue+Description>) so we can investigate.
+- **Want a company added?** Check **[LIST.md](LIST.md)** first to see if it is already actively scraped or documented as unsupported. If it's missing, [open a Company Request issue](https://github.com/vishnunandan555/interntrack-india/issues/new?title=%5BCompany+Request%5D+<Company+Name>) with the company's official career portal URL!
+- **Found a broken link or expired posting?** Please [open a Bug Report issue](https://github.com/vishnunandan555/interntrack-india/issues/new?title=%5BBug%5D+<Issue+Description>) so we can investigate.
 - **Looking for developer guides, CLI usage, or scraper architecture?** Read the complete **[Developer & System Guide (GUIDE.md)](GUIDE.md)**.
 """
 
