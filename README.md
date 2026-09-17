@@ -1,16 +1,19 @@
+<a id="top"></a>
 # 🇮🇳 Software Engineering & Tech Internship Tracker — India
 
 Auto-updated list of **open tech & software-engineering internships in India** —
 AI/ML, Data, Full-Stack, Backend, Frontend, Mobile, QA/SDET, and Security roles — at
 55 top tech companies, GCCs, and high-growth Indian unicorns. Scraped directly
-from official careers APIs daily (at 05:30 AM IST) by GitHub Actions.
+from official careers APIs daily (at 03:00 AM IST) by GitHub Actions.
 
-🌐 **Live Web Dashboard: [vishnunandan555.github.io/internship-tracker](https://vishnunandan555.github.io/internship-tracker/)** · 🛠️ **[GUIDE.md](GUIDE.md)** · 🚀 **[ROADMAP.md](ROADMAP.md)** · 📋 **[Scrape Logs](logs/)**
+🌐 **Live Web Dashboard: [vishnunandan555.github.io/internship-tracker](https://vishnunandan555.github.io/internship-tracker/)** · 🏢 **[Company List (LIST.md)](LIST.md)** · 🛠️ **[GUIDE.md](GUIDE.md)** · 🚀 **[ROADMAP.md](ROADMAP.md)** · 📋 **[Scrape Logs](logs/)**
 
-> 🕐 Last updated: **2026-09-17 22:16:17 IST** · 📌 **15** open internships
+> 🕐 Last updated: **2026-09-17 22:44:05 IST** · 📌 **16** open internships
 > · 🆕 = added in the last 7 days
 
 ⭐ Star this repository to keep track of new openings — or watch *Activity* for commits titled “new internship(s)”.
+
+[⬇️ **Skip directly to Open Internship Postings (16)**](#open-internships)
 
 | Company | Open Internships in India |
 |---|:---:|
@@ -62,7 +65,7 @@ from official careers APIs daily (at 05:30 AM IST) by GitHub Actions.
 | Snowflake | — |
 | [Stripe](#stripe) | **1** |
 | Swiggy | — |
-| Twilio | — |
+| [Twilio](#twilio) | **1** |
 | Visa | — |
 | [Walmart Global Tech](#walmart-global-tech) | **1** |
 | Wells Fargo | — |
@@ -104,6 +107,10 @@ from official careers APIs daily (at 05:30 AM IST) by GitHub Actions.
 
 ---
 
+<a id="open-internships"></a>
+
+## 💼 Open Internship Postings
+
 ## Google
 
 | Role | Category | Hub / Location | Posted | First seen |
@@ -111,11 +118,15 @@ from official careers APIs daily (at 05:30 AM IST) by GitHub Actions.
 | [Software Engineering PhD Intern, Summer 2027](https://www.google.com/about/careers/applications/jobs/results/109976286780105414) 🆕 | Software | Bengaluru | 2026-09-07 | 2026-09-17 |
 | [Silicon Engineering Intern, PhD, Summer 2027](https://www.google.com/about/careers/applications/jobs/results/109375266236572358) 🆕 | Hardware/Silicon | Bengaluru | 2026-09-07 | 2026-09-17 |
 
+[⬆️ Back to Top](#top)
+
 ## HPE
 
 | Role | Category | Hub / Location | Posted | First seen |
 |---|---|---|---|---|
 | [College Intern](https://careers.hpe.com/us/en/job/1211843) 🆕 | Software | Bengaluru | 2026-09-01 | 2026-09-17 |
+
+[⬆️ Back to Top](#top)
 
 ## Microsoft
 
@@ -126,6 +137,8 @@ from official careers APIs daily (at 05:30 AM IST) by GitHub Actions.
 | [Research Sciences INTERN](https://apply.careers.microsoft.com/careers/job/1970393556971804) 🆕 | AI/ML | Bengaluru | 2026-08-20 | 2026-09-17 |
 | [Research Sciences INTERN](https://apply.careers.microsoft.com/careers/job/1970393556641091) 🆕 | AI/ML | India (Multiple/Other) | 2026-02-27 | 2026-09-17 |
 
+[⬆️ Back to Top](#top)
+
 ## Qualcomm
 
 | Role | Category | Hub / Location | Posted | First seen |
@@ -134,6 +147,8 @@ from official careers APIs daily (at 05:30 AM IST) by GitHub Actions.
 | [Interim Engineering Intern_2027_HW](https://careers.qualcomm.com/careers/job/446719784824?domain=qualcomm.com) 🆕 | Hardware/Silicon | Bengaluru | 2026-09-09 | 2026-09-17 |
 | [1 year  Internship_SW_CDC](https://careers.qualcomm.com/careers/job/446717035053?domain=qualcomm.com) 🆕 | Software | Chennai | 2026-02-24 | 2026-09-17 |
 
+[⬆️ Back to Top](#top)
+
 ## Rubrik
 
 | Role | Category | Hub / Location | Posted | First seen |
@@ -141,11 +156,15 @@ from official careers APIs daily (at 05:30 AM IST) by GitHub Actions.
 | [Software Engineer - Winter Intern](https://www.rubrik.com/company/careers/departments/job.8166523?gh_jid=8166523) 🆕 | Software | Bengaluru | 2026-09-06 | 2026-09-17 |
 | [Software Engineer (CPD) - Winter Intern](https://www.rubrik.com/company/careers/departments/job.8166537?gh_jid=8166537) 🆕 | Software | Bengaluru | 2026-09-06 | 2026-09-17 |
 
+[⬆️ Back to Top](#top)
+
 ## Salesforce
 
 | Role | Category | Hub / Location | Posted | First seen |
 |---|---|---|---|---|
 | [Summer 2027 Intern - Software Engineer](https://salesforce.wd12.myworkdayjobs.com/en-US/External_Career_Site/job/India---Bangalore/Summer-2027-Intern---Software-Engineer_JR337715) 🆕 | Software | Bengaluru | — | 2026-09-17 |
+
+[⬆️ Back to Top](#top)
 
 ## Stripe
 
@@ -153,24 +172,29 @@ from official careers APIs daily (at 05:30 AM IST) by GitHub Actions.
 |---|---|---|---|---|
 | [Software Engineer, Intern](https://stripe.com/jobs/search?gh_jid=8031833) 🆕 | Software | Bengaluru | 2026-07-10 | 2026-09-17 |
 
+[⬆️ Back to Top](#top)
+
+## Twilio
+
+| Role | Category | Hub / Location | Posted | First seen |
+|---|---|---|---|---|
+| [Software Engineer Intern (January 12th start, 23 weeks)](https://job-boards.greenhouse.io/twilio/jobs/8190889) 🆕 | Software | Remote (India) | 2026-09-16 | 2026-09-17 |
+
+[⬆️ Back to Top](#top)
+
 ## Walmart Global Tech
 
 | Role | Category | Hub / Location | Posted | First seen |
 |---|---|---|---|---|
 | [(IND) Grad Intern - No Work Experience](https://walmart.wd504.myworkdayjobs.com/en-US/WalmartExternal/job/IN-KA-BANGALORE-Home-Office-Building-10/XMLNAME--IND--Grad-Intern---No-Work-Experience_R-2557935) 🆕 | Software | Bengaluru | — | 2026-09-17 |
 
+[⬆️ Back to Top](#top)
+
 
 ---
 
-## ⚙️ How This Works
+## 🤝 Request a Company or Report an Issue
 
-A high-speed concurrent [Python scraper](scraper/) runs in GitHub Actions daily at 05:30 AM IST:
-1. Concurrently queries official careers APIs (Workday, Greenhouse, SmartRecruiters, Lever, Eightfold, Phenom, Oracle HCM, and custom REST APIs).
-2. Filters for active internships, co-ops, and trainee engineering roles ([scraper/categories.py](scraper/categories.py)).
-3. Strictly filters locations within India tech hubs (Bengaluru, Hyderabad, Pune, Delhi-NCR, Chennai, Mumbai, and Remote India) ([scraper/regions.py](scraper/regions.py)).
-4. Diffs against [`data/jobs.json`](data/jobs.json) to track additions, closures, and re-openings.
-5. Auto-updates this `README.md`, execution logs in [`logs/`](logs/), and the interactive web dashboard in `docs/`.
-
-📖 **Looking for CLI usage, ATS auto-detection, architecture, or adding a company? Read the [Developer & System Guide (GUIDE.md)](GUIDE.md).**
-
-Found an issue or want to request a company? Feel free to open an issue or pull request!
+- **Want a company added?** Check **[LIST.md](LIST.md)** first to see if it is already actively scraped or documented as unsupported. If it's missing, [open a Company Request issue](https://github.com/vishnunandan555/FAANG-2027-Internships-Tracker/issues/new?title=%5BCompany+Request%5D+<Company+Name>) with the company's official career portal URL!
+- **Found a broken link or expired posting?** Please [open a Bug Report issue](https://github.com/vishnunandan555/FAANG-2027-Internships-Tracker/issues/new?title=%5BBug%5D+<Issue+Description>) so we can investigate.
+- **Looking for developer guides, CLI usage, or scraper architecture?** Read the complete **[Developer & System Guide (GUIDE.md)](GUIDE.md)**.

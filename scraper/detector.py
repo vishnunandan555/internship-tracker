@@ -12,7 +12,6 @@ import requests
 
 from .adapters import ashby, greenhouse, lever, smartrecruiters
 from .http import USER_AGENT, request_text
-from .models import Job
 
 
 def detect_ats(url: str):

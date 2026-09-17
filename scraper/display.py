@@ -48,14 +48,16 @@ def status_ok(name: str, duration: float, n_postings: int, n_interns: int, n_ind
     badge = green("[OK]  ")
     dur = dim(f"({duration:4.1f}s)")
     details = f"{n_postings:>4} postings, {n_interns:>2} interns, {bold(str(n_india))} India"
-    return f"{badge} {bold(name):<30} {dur} {details}"
+    padded_name = f"{name:<24}"
+    return f"{badge} {bold(padded_name)} {dur} {details}"
 
 
 def status_fail(name: str, duration: float, err: str) -> str:
     badge = red("[FAIL]")
     dur = dim(f"({duration:4.1f}s)")
     short_err = str(err).split("\n")[0][:60]
-    return f"{badge} {bold(name):<30} {dur} {red(short_err)}"
+    padded_name = f"{name:<24}"
+    return f"{badge} {bold(padded_name)} {dur} {red(short_err)}"
 
 
 def status_skip(name: str, reason: str) -> str:

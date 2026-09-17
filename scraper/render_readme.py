@@ -3,6 +3,7 @@ import os
 from datetime import datetime, timedelta, timezone
 
 README_PATH = os.path.join(os.path.dirname(__file__), "..", "README.md")
+_TMP_README_PATH = README_PATH + ".tmp"
 NEW_BADGE_DAYS = 7
 IST = timezone(timedelta(hours=5, minutes=30))
 
@@ -17,14 +18,15 @@ def _to_ist_str(iso_utc: str) -> str:
 
 
 HEADER = """\
+<a id="top"></a>
 # 🇮🇳 Software Engineering & Tech Internship Tracker — India
 
 Auto-updated list of **open tech & software-engineering internships in India** —
 AI/ML, Data, Full-Stack, Backend, Frontend, Mobile, QA/SDET, and Security roles — at
 {n_companies} top tech companies, GCCs, and high-growth Indian unicorns. Scraped directly
-from official careers APIs daily (at 05:30 AM IST) by GitHub Actions.
+from official careers APIs daily (at 03:00 AM IST) by GitHub Actions.
 
-🌐 **Live Web Dashboard: [vishnunandan555.github.io/internship-tracker](https://vishnunandan555.github.io/internship-tracker/)** · 🛠️ **[GUIDE.md](GUIDE.md)** · 🚀 **[ROADMAP.md](ROADMAP.md)** · 📋 **[Scrape Logs](logs/)**
+🌐 **Live Web Dashboard: [vishnunandan555.github.io/internship-tracker](https://vishnunandan555.github.io/internship-tracker/)** · 🏢 **[Company List (LIST.md)](LIST.md)** · 🛠️ **[GUIDE.md](GUIDE.md)** · 🚀 **[ROADMAP.md](ROADMAP.md)** · 📋 **[Scrape Logs](logs/)**
 
 > 🕐 Last updated: **{updated}** · 📌 **{n_open}** open internships
 > · 🆕 = added in the last {new_days} days
@@ -36,18 +38,11 @@ from official careers APIs daily (at 05:30 AM IST) by GitHub Actions.
 FOOTER = """
 ---
 
-## ⚙️ How This Works
+## 🤝 Request a Company or Report an Issue
 
-A high-speed concurrent [Python scraper](scraper/) runs in GitHub Actions daily at 05:30 AM IST:
-1. Concurrently queries official careers APIs (Workday, Greenhouse, SmartRecruiters, Lever, Eightfold, Phenom, Oracle HCM, and custom REST APIs).
-2. Filters for active internships, co-ops, and trainee engineering roles ([scraper/categories.py](scraper/categories.py)).
-3. Strictly filters locations within India tech hubs (Bengaluru, Hyderabad, Pune, Delhi-NCR, Chennai, Mumbai, and Remote India) ([scraper/regions.py](scraper/regions.py)).
-4. Diffs against [`data/jobs.json`](data/jobs.json) to track additions, closures, and re-openings.
-5. Auto-updates this `README.md`, execution logs in [`logs/`](logs/), and the interactive web dashboard in `docs/`.
-
-📖 **Looking for CLI usage, ATS auto-detection, architecture, or adding a company? Read the [Developer & System Guide (GUIDE.md)](GUIDE.md).**
-
-Found an issue or want to request a company? Feel free to open an issue or pull request!
+- **Want a company added?** Check **[LIST.md](LIST.md)** first to see if it is already actively scraped or documented as unsupported. If it's missing, [open a Company Request issue](https://github.com/vishnunandan555/FAANG-2027-Internships-Tracker/issues/new?title=%5BCompany+Request%5D+<Company+Name>) with the company's official career portal URL!
+- **Found a broken link or expired posting?** Please [open a Bug Report issue](https://github.com/vishnunandan555/FAANG-2027-Internships-Tracker/issues/new?title=%5BBug%5D+<Issue+Description>) so we can investigate.
+- **Looking for developer guides, CLI usage, or scraper architecture?** Read the complete **[Developer & System Guide (GUIDE.md)](GUIDE.md)**.
 """
 
 
@@ -89,6 +84,9 @@ def render(state):
         new_days=NEW_BADGE_DAYS,
     )]
 
+    # Fast jump to active postings
+    out.append(f"[⬇️ **Skip directly to Open Internship Postings ({len(jobs)})**](#open-internships)\n\n")
+
     # summary table with anchors
     out.append("| Company | Open Internships in India |\n|---|:---:|\n")
     for c in companies:
@@ -97,15 +95,19 @@ def render(state):
         out.append("| {} | {} |\n".format(label, f"**{n}**" if n else "—"))
     for name, why in sorted(UNSUPPORTED.items()):
         out.append("| {} | *{}* |\n".format(name, why))
-    out.append("\n---\n\n")
+    out.append("\n---\n\n<a id=\"open-internships\"></a>\n\n## 💼 Open Internship Postings\n\n")
 
-    for c in companies:
-        if not by_company[c]:
-            continue
-        rows = sorted(by_company[c],
-                      key=lambda j: (j.get("posted") or j.get("first_seen", ""),
-                                     j["title"]),
-                      reverse=True)
+    sorted_by_company = {
+        c: sorted(
+            by_company[c],
+            key=lambda j: (j.get("posted") or j.get("first_seen", ""), j["title"]),
+            reverse=True,
+        )
+        for c in companies
+        if by_company.get(c)
+    }
+
+    for c, rows in sorted_by_company.items():
         out.append("## {}\n\n".format(c))
         out.append("| Role | Category | Hub / Location | Posted | First seen |\n"
                    "|---|---|---|---|---|\n")
@@ -119,9 +121,19 @@ def render(state):
             first_seen = j.get("first_seen") or "—"
             out.append("| {} | {} | {} | {} | {} |\n".format(
                 title, cat, hub, posted, first_seen))
-        out.append("\n")
+        out.append("\n[⬆️ Back to Top](#top)\n\n")
 
     out.append(FOOTER)
 
-    with open(README_PATH, "w") as fh:
-        fh.write("".join(out))
+    try:
+        with open(_TMP_README_PATH, "w", encoding="utf-8") as fh:
+            fh.write("".join(out))
+        os.replace(_TMP_README_PATH, README_PATH)
+    except Exception as exc:
+        if os.path.exists(_TMP_README_PATH):
+            try:
+                os.remove(_TMP_README_PATH)
+            except OSError:
+                pass
+        raise IOError(f"Failed to atomically render README to {README_PATH}: {exc}") from exc
+

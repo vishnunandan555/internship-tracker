@@ -27,9 +27,14 @@ class ScrapeLogger:
         self.start_str = self.start_time.strftime("%Y-%m-%d %H:%M:%S UTC")
 
     def log(self, message: str, level: str = "INFO"):
-        """Record a line in the full log buffer with a timestamp."""
+        """Record a line in the full log buffer with a timestamp, sanitizing tracebacks."""
         ts = datetime.now(timezone.utc).strftime("%H:%M:%S")
         clean_msg = strip_ansi(message)
+        # Redact any accidental tokens/keys in query params
+        clean_msg = re.sub(r"(key|token|secret|password)=([^\s&]+)", r"\1=***REDACTED***", clean_msg, flags=re.IGNORECASE)
+        lines = clean_msg.splitlines()
+        if len(lines) > 3:
+            clean_msg = f"{lines[0]} ... [truncated {len(lines) - 1} traceback lines]"
         self.full_lines.append(f"[{ts}] [{level:<5}] {clean_msg}")
 
     def save(self, total_duration: float, succeeded: Set[str], failed: Dict[str, str],
@@ -52,8 +57,8 @@ class ScrapeLogger:
             "",
         ]
         with open(full_path, "w", encoding="utf-8") as fh:
-            fh.write("\n".join(header) + "\n")
-            fh.write("\n".join(self.full_lines) + "\n")
+            fh.writelines(line + "\n" for line in header)
+            fh.writelines(line + "\n" for line in self.full_lines)
 
         # 2. logs/scrape_summary.log (Minimal, main info only)
         summary_path = os.path.join(LOGS_DIR, "scrape_summary.log")

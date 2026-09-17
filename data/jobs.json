@@ -232,6 +232,21 @@
       "title": "Software Engineer, Intern",
       "url": "https://stripe.com/jobs/search?gh_jid=8031833"
     },
+    "twilio:8190889": {
+      "active": true,
+      "category": "Software",
+      "city_tag": "Remote (India)",
+      "company": "Twilio",
+      "external_id": "8190889",
+      "first_seen": "2026-09-17",
+      "last_seen": "2026-09-17",
+      "locations": [
+        "Remote - India"
+      ],
+      "posted": "2026-09-16",
+      "title": "Software Engineer Intern (January 12th start, 23 weeks)",
+      "url": "https://job-boards.greenhouse.io/twilio/jobs/8190889"
+    },
     "walmart-global-tech:R-2557935": {
       "active": true,
       "category": "Software",
@@ -248,5 +263,5 @@
       "url": "https://walmart.wd504.myworkdayjobs.com/en-US/WalmartExternal/job/IN-KA-BANGALORE-Home-Office-Building-10/XMLNAME--IND--Grad-Intern---No-Work-Experience_R-2557935"
     }
   },
-  "updated_at": "2026-09-17T16:46:17Z"
+  "updated_at": "2026-09-17T17:14:05Z"
 }

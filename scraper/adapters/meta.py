@@ -19,8 +19,9 @@ from ..models import Job
 PAGE_URL = "https://www.metacareers.com/jobsearch/"
 GRAPHQL_URL = "https://www.metacareers.com/graphql"
 JOB_URL = "https://www.metacareers.com/jobs/{id}"
-DOC_ID = "27506805582236862"
+DEFAULT_DOC_ID = "27506805582236862"
 LSD_RE = re.compile(r'"LSD",\[\],\{"token":"([^"]+)"')
+DOC_ID_RE = re.compile(r'(?:CareersJobSearchResultsDataQuery|CareersJobSearchResultsQuery)[^}]*?"(?:query_id|doc_id)":\s*"(\d+)"')
 
 NAV_HEADERS = {
     "User-Agent": USER_AGENT,
@@ -40,6 +41,11 @@ def fetch(cfg):
         raise RuntimeError("could not extract LSD token from metacareers page")
     lsd = m.group(1)
 
+    doc_id = cfg.get("doc_id")
+    if not doc_id:
+        doc_m = DOC_ID_RE.search(resp.text)
+        doc_id = doc_m.group(1) if doc_m else DEFAULT_DOC_ID
+
     resp = session.post(GRAPHQL_URL, timeout=30, headers={
         "User-Agent": USER_AGENT,
         "Content-Type": "application/x-www-form-urlencoded",
@@ -52,7 +58,7 @@ def fetch(cfg):
         "lsd": lsd,
         "fb_api_caller_class": "RelayModern",
         "fb_api_req_friendly_name": "CareersJobSearchResultsDataQuery",
-        "doc_id": DOC_ID,
+        "doc_id": doc_id,
         "variables": json.dumps({"search_input": {"q": cfg.get("query", "intern")}}),
     })
     resp.raise_for_status()

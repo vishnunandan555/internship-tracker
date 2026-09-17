@@ -109,7 +109,9 @@ def is_india_job(locations):
 def get_city_tag(locations):
     """Classify into standard UI filter tags: bengaluru, hyderabad, pune, ncr, chennai, mumbai, remote, other."""
     combined = " ".join(locations or []).lower()
-    if REMOTE_INDIA.search(combined) or "remote" in combined and is_india_job(locations):
+    # Explicit parentheses: REMOTE_INDIA pattern matches directly, OR a generic "remote" string
+    # is verified to actually be an Indian location (avoiding matching US/global-only remote roles).
+    if REMOTE_INDIA.search(combined) or ("remote" in combined and is_india_job(locations)):
         return "Remote (India)"
     if "bengaluru" in combined or "bangalore" in combined or "blr" in combined:
         return "Bengaluru"

@@ -2,11 +2,11 @@ name: Update India internship listings
 
 on:
   schedule:
-    - cron: "0 0 * * *" # Daily at 00:00 UTC (05:30 AM IST)
+    - cron: "30 21 * * *" # Daily at 21:30 UTC (03:00 AM IST Asia/Kolkata)
   workflow_dispatch:
     inputs:
       company:
-        description: "Company to scrape (leave blank for all 42)"
+        description: "Company to scrape (leave blank for all 55)"
         required: false
         default: ""
       keyword:
@@ -23,8 +23,7 @@ on:
         default: "8"
 
 permissions:
-  contents: write
-  issues: write
+  contents: read
 
 concurrency:
   group: update-listings
@@ -33,6 +32,10 @@ concurrency:
 jobs:
   scrape:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      failed: ${{ steps.scrape.outputs.failed }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -55,29 +58,18 @@ jobs:
           FORCE_COLOR: "1"
           SERP_API_KEY: ${{ secrets.SERP_API_KEY }}
           RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
-        run: |
-          CMD="python -m scraper.main"
-          if [ -n "${{ github.event.inputs.company }}" ]; then
-            CMD="$CMD -c '${{ github.event.inputs.company }}'"
-          fi
-          if [ -n "${{ github.event.inputs.keyword }}" ]; then
-            CMD="$CMD -k '${{ github.event.inputs.keyword }}'"
-          fi
-          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
-            CMD="$CMD --dry-run"
-          fi
-          if [ -n "${{ github.event.inputs.workers }}" ]; then
-            CMD="$CMD -w ${{ github.event.inputs.workers }}"
-          fi
-          echo "Executing: $CMD"
-          eval "$CMD"
+          SCRAPER_COMPANY: ${{ github.event.inputs.company }}
+          SCRAPER_KEYWORD: ${{ github.event.inputs.keyword }}
+          SCRAPER_DRY_RUN: ${{ github.event.inputs.dry_run }}
+          SCRAPER_WORKERS: ${{ github.event.inputs.workers }}
+        run: python -m scraper.main
 
       - name: Commit and push changes
         if: github.event.inputs.dry_run != 'true'
         run: |
           git config user.name "internship-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add README.md data/ docs/ logs/
+          git add README.md LIST.md data/ docs/ logs/
           if git diff --cached --quiet; then
             echo "No database or README changes to commit."
             exit 0
@@ -90,16 +82,25 @@ jobs:
           git pull --rebase
           git push
 
+  report-issues:
+    needs: scrape
+    if: needs.scrape.outputs.failed != '0' && needs.scrape.outputs.failed != '' && github.event.inputs.dry_run != 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Report scraper failures as GitHub Issues
-        if: steps.scrape.outputs.failed != '0' && steps.scrape.outputs.failed != '' && github.event.inputs.dry_run != 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           if [ ! -f "data/health.json" ]; then
             exit 0
           fi
-          TITLE="scraper failure: $(python -c "import json;d=json.load(open('data/health.json'));print(', '.join(sorted(d.get('failed', {}).keys())))")"
-          BODY=$(python -c "import json;d=json.load(open('data/health.json'));print('\n'.join('- **%s**: %s' % kv for kv in sorted(d.get('failed', {}).items())))")
+          TITLE="scraper failure: $(python3 -c "import json;d=json.load(open('data/health.json'));print(', '.join(sorted(d.get('failed', {}).keys())))")"
+          BODY=$(python3 -c "import json;d=json.load(open('data/health.json'));print('\n'.join('- **%s**: %s' % kv for kv in sorted(d.get('failed', {}).items())))")
           gh label create scraper-health --color D93F0B --description "a careers-API scraper is failing" 2>/dev/null || true
           # avoid duplicate issues for the same breakage
           if ! gh issue list --state open --search "$TITLE in:title" --json title -q '.[].title' | grep -qF "$TITLE"; then
@@ -107,3 +108,4 @@ jobs:
 
           A company careers API changed or is temporarily down. Existing listings for it are preserved until it scrapes successfully again." --label scraper-health || true
           fi
+

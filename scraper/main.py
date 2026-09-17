@@ -10,6 +10,7 @@ Usage:
 """
 import argparse
 import concurrent.futures
+import gzip
 import json
 import os
 import shutil
@@ -19,8 +20,10 @@ import time
 from . import display, store
 from .categories import categorize
 from .companies import COMPANIES, UNSUPPORTED
+from .http import get_session, set_thread_timeout
 from .logger import ScrapeLogger
 from .regions import get_city_tag, is_india_job
+from .render_list import render_list
 from .render_readme import render
 
 HEALTH_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "health.json")
@@ -32,6 +35,8 @@ def _scrape_single_company(cfg, keyword=None):
     name = cfg["name"]
     start_t = time.perf_counter()
     try:
+        cfg["session"] = get_session()
+        set_thread_timeout(cfg.get("timeout"))
         fetched = cfg["fetch"](cfg)
         interns = [j for j in fetched if j.looks_like_internship() and j.url]
 
@@ -40,12 +45,14 @@ def _scrape_single_company(cfg, keyword=None):
             kw = keyword.lower()
             interns = [j for j in interns if kw in j.title.lower()]
 
+        # Fused single-pass filter for categorization, region verification, and city hub tagging
+        in_india = []
         for j in interns:
-            j.category = categorize(j.title)
-        in_scope = [j for j in interns if j.category]
-        in_india = [j for j in in_scope if is_india_job(j.locations)]
-        for j in in_india:
-            j.city_tag = get_city_tag(j.locations)
+            cat = categorize(j.title)
+            if cat and is_india_job(j.locations):
+                j.category = cat
+                j.city_tag = get_city_tag(j.locations)
+                in_india.append(j)
 
         duration = time.perf_counter() - start_t
         return (name, in_india, len(fetched), len(interns), duration, None)
@@ -142,17 +149,51 @@ def run(only_companies=None, keyword=None, dry_run=False, workers=8):
     store.save(state)
     render(state)
 
+    # Maintain cumulative health across full and partial runs
+    all_configured = {c["name"] for c in COMPANIES}
+    prev_succeeded = all_configured.copy()
+    prev_failed = {}
+    if os.path.exists(HEALTH_PATH):
+        try:
+            with open(HEALTH_PATH, "r", encoding="utf-8") as fh:
+                hdata = json.load(fh)
+                prev_failed = dict(hdata.get("failed", {}))
+                prev_succeeded = (set(hdata.get("succeeded", [])) | all_configured) - set(prev_failed.keys())
+        except Exception:
+            pass
+
+    if only_companies:
+        for c in succeeded:
+            prev_succeeded.add(c)
+            prev_failed.pop(c, None)
+        for c, err in failed.items():
+            prev_failed[c] = str(err)
+            prev_succeeded.discard(c)
+        full_succeeded = prev_succeeded
+        full_failed = prev_failed
+    else:
+        full_succeeded = succeeded
+        full_failed = failed
+
+    # Render minimal company list into LIST.md
+    render_list(full_succeeded, full_failed, updated_at=state.get("updated_at"))
+
     # Sync a copy directly into docs/ so GitHub Pages loads without CORS or CDN latency
     try:
         os.makedirs(os.path.dirname(DOCS_JOBS_PATH), exist_ok=True)
         shutil.copyfile(store.DATA_PATH, DOCS_JOBS_PATH)
+        # Pre-compress gzip copy for optimized network distribution (Issue 3.3)
+        with open(store.DATA_PATH, "rb") as f_in:
+            with gzip.open(store.DATA_PATH + ".gz", "wb") as f_out:
+                shutil.copyfileobj(f_in, f_out)
+        shutil.copyfile(store.DATA_PATH + ".gz", DOCS_JOBS_PATH + ".gz")
     except Exception as err:
         print(display.yellow(f"warning: could not sync docs/jobs.json: {err}"))
 
     # Record health
     os.makedirs(os.path.dirname(HEALTH_PATH), exist_ok=True)
     with open(HEALTH_PATH, "w") as fh:
-        json.dump({"succeeded": sorted(succeeded), "failed": failed},
+        json.dump({"succeeded": sorted(full_succeeded), "failed": full_failed},
                   fh, indent=2, sort_keys=True)
         fh.write("\n")
 
@@ -179,16 +220,38 @@ def run(only_companies=None, keyword=None, dry_run=False, workers=8):
         is_dry_run=False,
     )
 
-    # Surface the counts to GitHub Actions if running in CI
+    # Surface counts and summary to GitHub CI
+    _write_github_outputs(added, closed, failed)
+    _write_github_summary(total_duration, succeeded, failed, all_jobs, added, closed)
+
+    return 0
+
+
+def _write_github_outputs(added: list, closed: list, failed: dict) -> None:
+    """Surface the counts to GitHub Actions outputs if running in CI."""
     gh_output = os.environ.get("GITHUB_OUTPUT")
     if gh_output:
-        with open(gh_output, "a") as fh:
-            fh.write(f"added={len(added)}\nclosed={len(closed)}\nfailed={len(failed)}\n")
+        try:
+            with open(gh_output, "a", encoding="utf-8") as fh:
+                fh.write(f"added={len(added)}\nclosed={len(closed)}\nfailed={len(failed)}\n")
+        except OSError as exc:
+            print(display.yellow(f"warning: failed writing GITHUB_OUTPUT: {exc}"))
 
-    # Render a rich dashboard inside GitHub Actions Job Summary
+
+def _write_github_summary(
+    total_duration: float,
+    succeeded: set,
+    failed: dict,
+    all_jobs: list,
+    added: list,
+    closed: list,
+) -> None:
+    """Render a rich dashboard inside GitHub Actions Job Summary."""
     gh_summary = os.environ.get("GITHUB_STEP_SUMMARY")
-    if gh_summary:
-        with open(gh_summary, "a") as fh:
+    if not gh_summary:
+        return
+    try:
+        with open(gh_summary, "a", encoding="utf-8") as fh:
             fh.write("### 🚀 India Tech Internships Scrape Summary\n\n")
             fh.write(f"- **Runtime:** `{total_duration:.1f}s` (parallel execution)\n")
             fh.write(f"- **Companies Succeeded:** `{len(succeeded)}` | **Failed:** `{len(failed)}`\n")
@@ -210,8 +273,19 @@ def run(only_companies=None, keyword=None, dry_run=False, workers=8):
                     short_err = str(err).split("\n")[0][:80]
                     fh.write(f"| **{c}** | `{short_err}` |\n")
                 fh.write("\n")
+    except OSError as exc:
+        print(display.yellow(f"warning: failed writing GITHUB_STEP_SUMMARY: {exc}"))
 
-    return 0
+
+def _args_from_env() -> tuple:
+    """Read scraper config from environment variables (set by GitHub Actions or container)."""
+    company_env = os.environ.get("SCRAPER_COMPANY", "").strip()
+    keyword_env = os.environ.get("SCRAPER_KEYWORD", "").strip()
+    dry_run_env = os.environ.get("SCRAPER_DRY_RUN", "").strip().lower() in ("true", "1", "yes")
+    workers_env_str = os.environ.get("SCRAPER_WORKERS", "").strip()
+    workers_env = int(workers_env_str) if workers_env_str.isdigit() else None
+    companies = [c.strip() for c in company_env.split(",") if c.strip()] if company_env else None
+    return companies, keyword_env or None, dry_run_env, workers_env
 
 
 def main():
@@ -224,7 +298,7 @@ def main():
     parser.add_argument("-k", "--keyword", help="Custom keyword to filter internship titles (e.g. 'hardware', '2027')")
     parser.add_argument("-d", "--dry-run", action="store_true", help="Preview scraped listings without modifying data/ or README")
     parser.add_argument("-s", "--search", help="Universal search for any company/keyword using Google Jobs/SERP API")
-    parser.add_argument("-w", "--workers", type=int, default=8, help="Number of concurrent worker threads (default: 8)")
+    parser.add_argument("-w", "--workers", type=int, default=None, help="Number of concurrent worker threads (default: 8)")
     parser.add_argument("-l", "--list", action="store_true", help="List all configured and unsupported companies")
 
     args = parser.parse_args()
@@ -255,6 +329,8 @@ def main():
         print()
         return 0
 
+    env_companies, env_keyword, env_dry_run, env_workers = _args_from_env()
+
     # Combine positional args and --company flags
     selected = []
     if args.targets:
@@ -262,12 +338,18 @@ def main():
     if args.company:
         for c in args.company:
             selected.extend([part.strip() for part in c.split(",") if part.strip()])
+    if not selected and env_companies:
+        selected.extend(env_companies)
+
+    keyword = args.keyword or env_keyword
+    dry_run = args.dry_run or env_dry_run
+    workers = args.workers if args.workers is not None else (env_workers if env_workers is not None else 8)
 
     return run(
         only_companies=set(selected) if selected else None,
-        keyword=args.keyword,
-        dry_run=args.dry_run,
-        workers=args.workers,
+        keyword=keyword,
+        dry_run=dry_run,
+        workers=workers,
     )
 
 

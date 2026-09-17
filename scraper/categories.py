@@ -9,6 +9,7 @@ Order matters: first matching category wins, so the more specific ones
 (Security, QA, Hardware/Silicon, Mobile, ...) come before the catch-alls.
 """
 import re
+from typing import Optional
 
 
 def _rx(pattern):
@@ -36,38 +37,39 @@ EXCLUDE_RE = _rx(
     r"human resources|\bhr\b|finance|legal|counsel|accountant|warehouse"
 )
 
-CATEGORIES = [
-    ("Security", _rx(r"security|cyber|infosec|appsec|threat|penetration|red team|"
-                     r"vulnerab|crypto(graph|log)")),
-    ("QA", _rx(r"\bqa\b|quality (assurance|engineer)|test(ing)? engineer|"
-               r"software test|\bsdet\b|validation")),
-    ("AI/ML", _rx(r"\bai\b|artificial intelligence|machine learning|\bml\b|"
-                  r"deep learning|computer vision|\bnlp\b|\bllm\b|gen ?ai|"
-                  r"generative|applied scien|research scien|research engineer|"
-                  r"student researcher|robotics|autonom|perception|recommender|"
-                  r"applied scientist|research scientist")),
-    ("Data", _rx(r"\bdata\b|analytics|business intelligence|bi engineer")),
-    ("Hardware/Silicon", _rx(r"silicon|hardware|\bhw\b|_hw\b|_hw_|asic|vlsi|fpga|semiconductor|circuit")),
-    ("Mobile", _rx(r"mobile|\bios\b|android|flutter|react native")),
-    ("Frontend", _rx(r"front[- ]?end|web develop|web engineer|\bui engineer\b|"
-                     r"javascript|typescript|\breact\b")),
-    ("Backend/Infra", _rx(r"back[- ]?end|distributed|infrastructure|platform|"
-                          r"cloud|devops|site reliability|\bsre\b|\bapi\b|"
-                          r"database|storage|network|linux|kernel|embedded|"
-                          r"firmware|compiler|operating system|virtualization")),
-    ("Software", _rx(r"software|\bswe\b|\bsde\b|\bmts\b|\bsw\b|_sw\b|_sw_|developer|full[- ]?stack|programmer|"
-                     r"application develop|computer science|solution develop|"
-                     r"game develop|\bdev\b|\bjava\b|\bpython\b|c\+\+|"
-                     r"\bgolang\b|\brust\b|graduate engineer trainee|\bget\b|"
-                     r"technical intern|technology intern|engineering intern|"
-                     r"grad(uate)? intern|college intern")),
+# Ordered definition table: (identifier, display_name, raw_regex_pattern)
+_CATEGORY_DEFS = [
+    ("Security", "Security", r"security|cyber|infosec|appsec|threat|penetration|red team|vulnerab|crypto(graph|log)"),
+    ("QA", "QA", r"\bqa\b|quality (assurance|engineer)|test(ing)? engineer|software test|\bsdet\b|validation"),
+    ("AIML", "AI/ML", r"\bai\b|artificial intelligence|machine learning|\bml\b|deep learning|computer vision|\bnlp\b|\bllm\b|gen ?ai|generative|applied scien|research scien|research engineer|student researcher|robotics|autonom|perception|recommender|applied scientist|research scientist"),
+    ("Data", "Data", r"\bdata\b|analytics|business intelligence|bi engineer"),
+    ("HardwareSilicon", "Hardware/Silicon", r"silicon|hardware|\bhw\b|_hw\b|_hw_|asic|vlsi|fpga|semiconductor|circuit"),
+    ("Mobile", "Mobile", r"mobile|\bios\b|android|flutter|react native"),
+    ("Frontend", "Frontend", r"front[- ]?end|web develop|web engineer|\bui engineer\b|javascript|typescript|\breact\b"),
+    ("BackendInfra", "Backend/Infra", r"back[- ]?end|distributed|infrastructure|platform|cloud|devops|site reliability|\bsre\b|\bapi\b|database|storage|network|linux|kernel|embedded|firmware|compiler|operating system|virtualization"),
+    ("Software", "Software", r"software|\bswe\b|\bsde\b|\bmts\b|\bsw\b|_sw\b|_sw_|developer|full[- ]?stack|programmer|application develop|computer science|solution develop|game develop|\bdev\b|\bjava\b|\bpython\b|c\+\+|\bgolang\b|\brust\b|graduate engineer trainee|\bget\b|technical intern|technology intern|engineering intern|grad(uate)? intern|college intern"),
 ]
 
+GROUP_TO_CATEGORY = {grp: cat for grp, cat, _ in _CATEGORY_DEFS}
 
-def categorize(title):
+# Combined single-pass regex compiled with named groups for fast O(1) matching
+COMBINED_CATEGORIES_RE = re.compile(
+    "|".join(f"(?P<{grp}>{pat})" for grp, _, pat in _CATEGORY_DEFS),
+    re.IGNORECASE,
+)
+
+# Retained for backwards-compatibility with existing tests and imports
+CATEGORIES = [(cat, _rx(pat)) for _, cat, pat in _CATEGORY_DEFS]
+
+
+def categorize(title: str) -> Optional[str]:
+    """Classify an internship title into a tech category, or return None if out-of-scope."""
+    if not title:
+        return None
     if not HARD_INCLUDE_RE.search(title) and EXCLUDE_RE.search(title):
         return None
-    for name, pattern in CATEGORIES:
-        if pattern.search(title):
-            return name
+    m = COMBINED_CATEGORIES_RE.search(title)
+    if m and m.lastgroup:
+        return GROUP_TO_CATEGORY.get(m.lastgroup)
     return None
+

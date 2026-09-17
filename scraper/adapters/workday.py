@@ -9,6 +9,7 @@ rate-limits by silently returning {"total": 0, "jobPostings": []} with HTTP
 200. Treating that as truth would make the store close every listing for the
 company, so empty pages are retried and a still-empty first page raises.
 """
+import random
 import re
 import time
 from datetime import datetime, timedelta, timezone
@@ -49,7 +50,8 @@ def _page(api, facets, search_text, offset):
                             headers={"Content-Type": "application/json"})
         if data.get("jobPostings") or data.get("total", 0) > 0:
             return data
-        time.sleep(8 * (attempt + 1))  # likely the silent rate-limit response
+        delay = min(8 * (attempt + 1), 20) * random.uniform(0.8, 1.2)
+        time.sleep(delay)  # likely the silent rate-limit response; apply jitter
     return data
 
 

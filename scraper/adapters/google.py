@@ -39,7 +39,7 @@ def fetch(cfg):
         if not raw_jobs:
             break
         for j in raw_jobs:
-            locations = [loc[0] for loc in (j[9] or []) if loc and loc[0]]
+            locations = [loc[0] for loc in (j[9] if len(j) > 9 and j[9] else []) if loc and loc[0]]
             # slot 12 is [epoch_seconds, nanos] — the oldest of the job's three
             # timestamps, i.e. its publication time (13/14 are modifications)
             ts = j[12][0] if len(j) > 12 and isinstance(j[12], list) and j[12] else None

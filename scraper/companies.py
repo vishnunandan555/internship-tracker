@@ -3,6 +3,8 @@
 Every entry: display name + adapter fetch function + adapter config.
 Focuses on FAANG, top global MNC tech centers in India, and top Indian product startups/unicorns.
 """
+from typing import Any, Callable, List, Optional, TypedDict
+
 from .adapters import (
     amazon,
     amd,
@@ -64,7 +66,24 @@ UNSUPPORTED = {
     "Tesla": "careers site sits behind Akamai bot protection returning 403 to non-browser clients",
 }
 
-COMPANIES = [
+class CompanyConfig(TypedDict, total=False):
+    name: str
+    fetch: Callable[..., List[Any]]
+    host: str
+    site: str
+    search_text: str
+    company: str
+    token: str
+    site_number: str
+    job_url: str
+    tenant: str
+    org: str
+    domain: str
+    session: Any
+    timeout: int
+
+
+COMPANIES: List[CompanyConfig] = [
     # --- Tier A: Major Product / Big Tech ------------------------------------
     {"name": "Google", "fetch": google.fetch},
     {"name": "Microsoft", "fetch": microsoft.fetch},
@@ -159,3 +178,13 @@ COMPANIES = [
     {"name": "GitLab", "fetch": greenhouse.fetch, "token": "gitlab"},
     {"name": "Twilio", "fetch": greenhouse.fetch, "token": "twilio"},
 ]
+
+# Validation: ensure every registry entry has the minimum required keys
+_REQUIRED_KEYS = {"name", "fetch"}
+for _entry in COMPANIES:
+    _missing = _REQUIRED_KEYS - set(_entry.keys())
+    if _missing:
+        raise ValueError(
+            f"Invalid company config for '{_entry.get('name', 'UNKNOWN')}': missing required keys {_missing}"
+        )
+

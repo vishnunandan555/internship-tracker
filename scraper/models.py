@@ -37,6 +37,30 @@ def as_date(value) -> Optional[str]:
     return None
 
 
+def normalize_locations(raw) -> List[str]:
+    """Normalize arbitrary location shapes (string, semicolon-separated, list, dict) into clean list of strings."""
+    if not raw:
+        return []
+    if isinstance(raw, str):
+        return [p.strip() for p in re.split(r"[;\n]", raw) if p.strip()]
+    if isinstance(raw, (list, tuple, set)):
+        result = []
+        for item in raw:
+            if isinstance(item, str):
+                result.extend(p.strip() for p in re.split(r"[;\n]", item) if p.strip())
+            elif isinstance(item, dict):
+                city = item.get("city") or item.get("city_name") or item.get("name") or ""
+                country = item.get("country") or item.get("country_code") or ""
+                if city and country and city != country:
+                    loc = f"{city}, {country}"
+                else:
+                    loc = city or country or item.get("location") or ""
+                if loc:
+                    result.append(loc.strip())
+        return sorted(set(result))
+    return []
+
+
 @dataclass
 class Job:
     company: str          # display name, e.g. "Google"
@@ -52,6 +76,9 @@ class Job:
     city_tag: Optional[str] = None
     # Publication date (YYYY-MM-DD) from the ATS, when it exposes one
     posted: Optional[str] = None
+
+    def __post_init__(self):
+        self.locations = normalize_locations(self.locations)
 
     def looks_like_internship(self) -> bool:
         if self.is_intern is not None:
