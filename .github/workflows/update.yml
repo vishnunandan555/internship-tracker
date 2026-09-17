@@ -51,6 +51,9 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Run test suite
+        run: python -m unittest discover -s tests
+
       - name: Run concurrent scraper
         id: scrape
         env:
@@ -99,13 +102,23 @@ jobs:
           if [ ! -f "data/health.json" ]; then
             exit 0
           fi
-          TITLE="scraper failure: $(python3 -c "import json;d=json.load(open('data/health.json'));print(', '.join(sorted(d.get('failed', {}).keys())))")"
-          BODY=$(python3 -c "import json;d=json.load(open('data/health.json'));print('\n'.join('- **%s**: %s' % kv for kv in sorted(d.get('failed', {}).items())))")
+          python3 -c "
+          import json
+          with open('data/health.json', encoding='utf-8') as f:
+              d = json.load(f)
+          failed = d.get('failed', {})
+          title = 'scraper failure: ' + ', '.join(sorted(failed.keys()))
+          with open('/tmp/issue_title.txt', 'w', encoding='utf-8') as f:
+              f.write(title)
+          body = '\n'.join('- **%s**: %s' % kv for kv in sorted(failed.items()))
+          body += '\n\nA company careers API changed or is temporarily down. Existing listings for it are preserved until it scrapes successfully again.\n'
+          with open('/tmp/issue_body.txt', 'w', encoding='utf-8') as f:
+              f.write(body)
+          "
+          TITLE=$(cat /tmp/issue_title.txt)
           gh label create scraper-health --color D93F0B --description "a careers-API scraper is failing" 2>/dev/null || true
           # avoid duplicate issues for the same breakage
           if ! gh issue list --state open --search "$TITLE in:title" --json title -q '.[].title' | grep -qF "$TITLE"; then
-            gh issue create --title "$TITLE" --body "$BODY
-
-          A company careers API changed or is temporarily down. Existing listings for it are preserved until it scrapes successfully again." --label scraper-health || true
+            gh issue create --title "$TITLE" --body-file /tmp/issue_body.txt --label scraper-health || true
           fi
 

@@ -1,5 +1,9 @@
 """Universal Google Jobs / SERP API Adapter.
 
+CLI-only universal fallback adapter invoked via `--search` flag.
+Intentionally excluded from the COMPANIES registry because it requires
+external API credits (SerpApi / RapidAPI) and is intended for ad-hoc queries.
+
 Bypasses Cloudflare, Akamai, and login walls by querying Google Jobs
 (via SerpApi or RapidAPI JSearch) for any company and role.
 

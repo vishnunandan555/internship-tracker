@@ -74,7 +74,7 @@ def _request(
     data: Any = None,
     cookies: Any = None,
     session: Optional[requests.Session] = None,
-    timeout: int = DEFAULT_TIMEOUT,
+    timeout: Optional[int] = None,
 ) -> requests.Response:
     default_ua = getattr(_thread_local, "user_agent", None)
     if not default_ua:
@@ -85,7 +85,7 @@ def _request(
     if headers:
         h.update(headers)
     client = session or get_session()
-    eff_timeout = timeout if timeout != DEFAULT_TIMEOUT else get_thread_timeout()
+    eff_timeout = timeout if timeout is not None else get_thread_timeout()
     last_err: Optional[Exception] = None
 
     for attempt in range(RETRIES):
@@ -124,7 +124,7 @@ def request_json(
     data: Any = None,
     cookies: Any = None,
     session: Optional[requests.Session] = None,
-    timeout: int = DEFAULT_TIMEOUT,
+    timeout: Optional[int] = None,
 ) -> dict:
     """Perform a request expecting a JSON response. Retries on 5xx/429/network errors."""
     return _request(
@@ -150,7 +150,7 @@ def request_text(
     data: Any = None,
     cookies: Any = None,
     session: Optional[requests.Session] = None,
-    timeout: int = DEFAULT_TIMEOUT,
+    timeout: Optional[int] = None,
 ) -> str:
     """Perform a request expecting text/HTML response. Retries on 5xx/429/network errors."""
     return _request(

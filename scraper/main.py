@@ -20,7 +20,7 @@ import time
 from . import display, store
 from .categories import categorize
 from .companies import COMPANIES, UNSUPPORTED
-from .http import get_session, set_thread_timeout
+from .http import close_thread_session, get_session, set_thread_timeout
 from .logger import ScrapeLogger
 from .regions import get_city_tag, is_india_job
 from .render_list import render_list
@@ -59,6 +59,8 @@ def _scrape_single_company(cfg, keyword=None):
     except Exception as err:
         duration = time.perf_counter() - start_t
         return (name, [], 0, 0, duration, err)
+    finally:
+        close_thread_session()
 
 
 def run(only_companies=None, keyword=None, dry_run=False, workers=8):
@@ -130,17 +132,7 @@ def run(only_companies=None, keyword=None, dry_run=False, workers=8):
             all_india_jobs=all_jobs,
             is_dry_run=True,
         )
-        gh_output = os.environ.get("GITHUB_OUTPUT")
-        if gh_output:
-            with open(gh_output, "a") as fh:
-                fh.write(f"added=0\nclosed=0\nfailed={len(failed)}\n")
-        gh_summary = os.environ.get("GITHUB_STEP_SUMMARY")
-        if gh_summary:
-            with open(gh_summary, "a") as fh:
-                fh.write("### ⚠️ Dry Run Completed (No Database Changes)\n\n")
-                fh.write(f"- **Total Time:** `{total_duration:.1f}s`\n")
-                fh.write(f"- **Companies Succeeded:** `{len(succeeded)}`\n")
-                fh.write(f"- **Active India Postings Found:** `{len(all_jobs)}`\n\n")
+        _write_github_dryrun_outputs(total_duration, succeeded, failed, all_jobs)
         return 0
 
     # Merge into database and diff
@@ -192,7 +184,7 @@ def run(only_companies=None, keyword=None, dry_run=False, workers=8):
 
     # Record health
     os.makedirs(os.path.dirname(HEALTH_PATH), exist_ok=True)
-    with open(HEALTH_PATH, "w") as fh:
+    with open(HEALTH_PATH, "w", encoding="utf-8") as fh:
         json.dump({"succeeded": sorted(full_succeeded), "failed": full_failed},
                   fh, indent=2, sort_keys=True)
         fh.write("\n")
@@ -225,6 +217,32 @@ def run(only_companies=None, keyword=None, dry_run=False, workers=8):
     _write_github_summary(total_duration, succeeded, failed, all_jobs, added, closed)
 
     return 0
+
+
+def _write_github_dryrun_outputs(
+    total_duration: float,
+    succeeded: set,
+    failed: dict,
+    all_jobs: list,
+) -> None:
+    """Surface dry-run stats to GitHub Actions outputs and step summary."""
+    gh_output = os.environ.get("GITHUB_OUTPUT")
+    if gh_output:
+        try:
+            with open(gh_output, "a", encoding="utf-8") as fh:
+                fh.write(f"added=0\nclosed=0\nfailed={len(failed)}\n")
+        except OSError as exc:
+            print(display.yellow(f"warning: failed writing GITHUB_OUTPUT: {exc}"))
+    gh_summary = os.environ.get("GITHUB_STEP_SUMMARY")
+    if gh_summary:
+        try:
+            with open(gh_summary, "a", encoding="utf-8") as fh:
+                fh.write("### ⚠️ Dry Run Completed (No Database Changes)\n\n")
+                fh.write(f"- **Total Time:** `{total_duration:.1f}s`\n")
+                fh.write(f"- **Companies Succeeded:** `{len(succeeded)}`\n")
+                fh.write(f"- **Active India Postings Found:** `{len(all_jobs)}`\n\n")
+        except OSError as exc:
+            print(display.yellow(f"warning: failed writing GITHUB_STEP_SUMMARY: {exc}"))
 
 
 def _write_github_outputs(added: list, closed: list, failed: dict) -> None:

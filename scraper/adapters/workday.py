@@ -96,7 +96,7 @@ def fetch(cfg):
                 posted=_posted_date(p.get("postedOn")),
             ))
         offset += PAGE
-        if offset >= total or not postings:
+        if offset >= total or not postings or page_no == max_pages - 1:
             break
         time.sleep(0.8)
     return jobs

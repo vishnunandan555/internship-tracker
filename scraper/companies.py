@@ -15,6 +15,7 @@ from .adapters import (
     github_careers,
     google,
     greenhouse,
+    janestreet,
     lever,
     meta,
     microsoft,
@@ -64,6 +65,7 @@ UNSUPPORTED = {
     "LinkedIn": "careers site only links to linkedin.com/jobs, which is authwalled and prohibits automated scraping",
     "Target": "US retail company with no India engineering center; scraper returns 0 India listings across 300+ postings",
     "Tesla": "careers site sits behind Akamai bot protection returning 403 to non-browser clients",
+    "Spotify": "limited tech/engineering presence in India; student hiring primarily US/EU/UK",
 }
 
 class CompanyConfig(TypedDict, total=False):
@@ -166,6 +168,7 @@ COMPANIES: List[CompanyConfig] = [
     {"name": "Mastercard", "fetch": workday.fetch,
      "host": "mastercard.wd1.myworkdayjobs.com", "site": "CorporateCareers"},
     {"name": "Bloomberg", "fetch": bloomberg.fetch},
+    {"name": "Jane Street", "fetch": janestreet.fetch},
 
     # --- Developer & High-Growth Platforms in India --------------------------
     {"name": "Stripe", "fetch": greenhouse.fetch, "token": "stripe"},

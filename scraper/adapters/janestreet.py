@@ -13,6 +13,8 @@ JOB_URL = "https://www.janestreet.com/join-jane-street/position/{id}/"
 
 def fetch(cfg):
     data = request_json("GET", API)
+    if not isinstance(data, list):
+        raise RuntimeError(f"Unexpected Jane Street response shape: {type(data)}")
     jobs = []
     for j in data:
         availability = j.get("availability") or ""

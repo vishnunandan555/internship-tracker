@@ -97,7 +97,8 @@ def print_dashboard(total_duration: float, succeeded: set, failed: dict,
         for j in added:
             loc = j.get("city_tag") or "India"
             cat = f"[{j.get('category', 'Tech')}]"
-            print(f"   + {bold(j['company']):<18} {j['title']} {cyan(loc)} {dim(cat)}")
+            comp_str = f"{j['company']:<18}"
+            print(f"   + {bold(comp_str)} {j['title']} {cyan(loc)} {dim(cat)}")
             print(f"     {dim(j.get('url', ''))}")
 
     if is_dry_run and all_india_jobs:
@@ -105,7 +106,8 @@ def print_dashboard(total_duration: float, succeeded: set, failed: dict,
         for j in all_india_jobs[:10]:
             loc = getattr(j, "city_tag", None) or "India"
             cat = f"[{getattr(j, 'category', 'Tech')}]"
-            print(f"   • {bold(j.company):<18} {j.title} {cyan(loc)} {dim(cat)}")
+            comp_str = f"{j.company:<18}"
+            print(f"   • {bold(comp_str)} {j.title} {cyan(loc)} {dim(cat)}")
             print(f"     {dim(j.url)}")
         if len(all_india_jobs) > 10:
             print(dim(f"   ... and {len(all_india_jobs) - 10} more listings."))
@@ -114,6 +116,7 @@ def print_dashboard(total_duration: float, succeeded: set, failed: dict,
         print(bold(red("\n  Failed Companies:")))
         for name, err in sorted(failed.items()):
             short_err = str(err).split("\n")[0][:70]
-            print(f"   × {bold(name):<18} {red(short_err)}")
+            name_str = f"{name:<18}"
+            print(f"   × {bold(name_str)} {red(short_err)}")
 
     print(bold("=" * width) + "\n")

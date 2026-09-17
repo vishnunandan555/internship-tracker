@@ -59,10 +59,10 @@ def _md_escape(text):
 
 
 def _fmt_locations(locations, limit=2):
-    locs = [l for l in locations if l]
+    locs = [loc for loc in locations if loc]
     if not locs:
         return "India"
-    shown = "; ".join(_md_escape(l) for l in locs[:limit])
+    shown = "; ".join(_md_escape(loc) for loc in locs[:limit])
     extra = len(locs) - limit
     if extra > 0:
         shown += " *(+{} more)*".format(extra)
@@ -131,7 +131,7 @@ def render(state):
 
     try:
         with open(_TMP_README_PATH, "w", encoding="utf-8") as fh:
-            fh.write("".join(out))
+            fh.writelines(out)
         os.replace(_TMP_README_PATH, README_PATH)
     except Exception as exc:
         if os.path.exists(_TMP_README_PATH):

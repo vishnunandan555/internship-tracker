@@ -10,7 +10,7 @@ def fetch(cfg):
     data = request_json("GET", API, params={"c": "", "l": "", "j": "internship"})
     jobs = []
     for j in data.get("result", []):
-        locations = [l.get("location", "") for l in j.get("locations", []) or []]
+        locations = [loc.get("location", "") for loc in j.get("locations", []) or []]
         jobs.append(Job(
             company=cfg["name"],
             external_id=str(j["id"]),

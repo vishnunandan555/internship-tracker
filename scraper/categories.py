@@ -71,5 +71,7 @@ def categorize(title: str) -> Optional[str]:
     m = COMBINED_CATEGORIES_RE.search(title)
     if m and m.lastgroup:
         return GROUP_TO_CATEGORY.get(m.lastgroup)
+    if HARD_INCLUDE_RE.search(title):
+        return "Software"
     return None
 
