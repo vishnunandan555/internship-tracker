@@ -33,7 +33,7 @@ from official careers APIs daily (at 03:00 AM IST) by GitHub Actions.
 [![Scrape Logs](https://img.shields.io/badge/Scrape_Logs-logs%2F-059669?style=for-the-badge&logo=files&logoColor=white)](logs/)
 
 > 🕐 Last updated: **{updated}** · 📌 **{n_open}** open internships
-> · 🆕 = added in the last {new_days} days
+> · ✨ = added in the last {new_days} days
 
 ⭐ Star this repository to keep track of new openings — or watch *Activity* for commits titled “new internship(s)”.
 
@@ -117,7 +117,7 @@ def render(state):
                    "|---|---|---|---|---|\n")
         for j in rows:
             is_new = (j.get("first_seen") or "") >= cutoff
-            badge = " 🆕" if is_new else ""
+            badge = " ✨" if is_new else ""
             title = "[{}]({}){}".format(_md_escape(j["title"]), j["url"], badge)
             cat = j.get("category") or "Software"
             hub = j.get("city_tag") or _fmt_locations(j.get("locations", []))

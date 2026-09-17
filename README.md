@@ -13,7 +13,7 @@ from official careers APIs daily (at 03:00 AM IST) by GitHub Actions.
 [![Scrape Logs](https://img.shields.io/badge/Scrape_Logs-logs%2F-059669?style=for-the-badge&logo=files&logoColor=white)](logs/)
 
 > 🕐 Last updated: **2026-09-17 23:15:25 IST** · 📌 **17** open internships
-> · 🆕 = added in the last 7 days
+> · ✨ = added in the last 7 days
 
 ⭐ Star this repository to keep track of new openings — or watch *Activity* for commits titled “new internship(s)”.
 
@@ -121,8 +121,8 @@ from official careers APIs daily (at 03:00 AM IST) by GitHub Actions.
 
 | Role | Category | Hub / Location | Posted | First seen |
 |---|---|---|---|---|
-| [Software Engineering PhD Intern, Summer 2027](https://www.google.com/about/careers/applications/jobs/results/109976286780105414) 🆕 | Software | Bengaluru | 2026-09-07 | 2026-09-17 |
-| [Silicon Engineering Intern, PhD, Summer 2027](https://www.google.com/about/careers/applications/jobs/results/109375266236572358) 🆕 | Hardware/Silicon | Bengaluru | 2026-09-07 | 2026-09-17 |
+| [Software Engineering PhD Intern, Summer 2027](https://www.google.com/about/careers/applications/jobs/results/109976286780105414) ✨ | Software | Bengaluru | 2026-09-07 | 2026-09-17 |
+| [Silicon Engineering Intern, PhD, Summer 2027](https://www.google.com/about/careers/applications/jobs/results/109375266236572358) ✨ | Hardware/Silicon | Bengaluru | 2026-09-07 | 2026-09-17 |
 
 [⬆️ Back to Top](#top)
 
@@ -130,7 +130,7 @@ from official careers APIs daily (at 03:00 AM IST) by GitHub Actions.
 
 | Role | Category | Hub / Location | Posted | First seen |
 |---|---|---|---|---|
-| [College Intern](https://careers.hpe.com/us/en/job/1211843) 🆕 | Software | Bengaluru | 2026-09-01 | 2026-09-17 |
+| [College Intern](https://careers.hpe.com/us/en/job/1211843) ✨ | Software | Bengaluru | 2026-09-01 | 2026-09-17 |
 
 [⬆️ Back to Top](#top)
 
@@ -138,10 +138,10 @@ from official careers APIs daily (at 03:00 AM IST) by GitHub Actions.
 
 | Role | Category | Hub / Location | Posted | First seen |
 |---|---|---|---|---|
-| [Applied Sciences INTERN](https://apply.careers.microsoft.com/careers/job/1970393556997800) 🆕 | AI/ML | India (Multiple/Other) | 2026-09-14 | 2026-09-17 |
-| [Software Engineering INTERN](https://apply.careers.microsoft.com/careers/job/1970393556911730) 🆕 | Software | India (Multiple/Other) | 2026-08-28 | 2026-09-17 |
-| [Research Sciences INTERN](https://apply.careers.microsoft.com/careers/job/1970393556971804) 🆕 | AI/ML | Bengaluru | 2026-08-20 | 2026-09-17 |
-| [Research Sciences INTERN](https://apply.careers.microsoft.com/careers/job/1970393556641091) 🆕 | AI/ML | India (Multiple/Other) | 2026-02-27 | 2026-09-17 |
+| [Applied Sciences INTERN](https://apply.careers.microsoft.com/careers/job/1970393556997800) ✨ | AI/ML | India (Multiple/Other) | 2026-09-14 | 2026-09-17 |
+| [Software Engineering INTERN](https://apply.careers.microsoft.com/careers/job/1970393556911730) ✨ | Software | India (Multiple/Other) | 2026-08-28 | 2026-09-17 |
+| [Research Sciences INTERN](https://apply.careers.microsoft.com/careers/job/1970393556971804) ✨ | AI/ML | Bengaluru | 2026-08-20 | 2026-09-17 |
+| [Research Sciences INTERN](https://apply.careers.microsoft.com/careers/job/1970393556641091) ✨ | AI/ML | India (Multiple/Other) | 2026-02-27 | 2026-09-17 |
 
 [⬆️ Back to Top](#top)
 
@@ -149,7 +149,7 @@ from official careers APIs daily (at 03:00 AM IST) by GitHub Actions.
 
 | Role | Category | Hub / Location | Posted | First seen |
 |---|---|---|---|---|
-| [PhD Intern, AI ML in Wireless L1/L2 - Fall 2026](https://nvidia.wd5.myworkdayjobs.com/en-US/NVIDIAExternalCareerSite/job/India-Bengaluru/PhD-Intern--AI-ML-in-Wireless-L1-L2---Fall-2026_JR2024423) 🆕 | AI/ML | Bengaluru | 2026-08-31 | 2026-09-17 |
+| [PhD Intern, AI ML in Wireless L1/L2 - Fall 2026](https://nvidia.wd5.myworkdayjobs.com/en-US/NVIDIAExternalCareerSite/job/India-Bengaluru/PhD-Intern--AI-ML-in-Wireless-L1-L2---Fall-2026_JR2024423) ✨ | AI/ML | Bengaluru | 2026-08-31 | 2026-09-17 |
 
 [⬆️ Back to Top](#top)
 
@@ -157,9 +157,9 @@ from official careers APIs daily (at 03:00 AM IST) by GitHub Actions.
 
 | Role | Category | Hub / Location | Posted | First seen |
 |---|---|---|---|---|
-| [Interim Engineering Intern_2027_SW](https://careers.qualcomm.com/careers/job/446719785836?domain=qualcomm.com) 🆕 | Software | Hyderabad | 2026-09-15 | 2026-09-17 |
-| [Interim Engineering Intern_2027_HW](https://careers.qualcomm.com/careers/job/446719784824?domain=qualcomm.com) 🆕 | Software | Bengaluru | 2026-09-09 | 2026-09-17 |
-| [1 year  Internship_SW_CDC](https://careers.qualcomm.com/careers/job/446717035053?domain=qualcomm.com) 🆕 | Software | Chennai | 2026-02-24 | 2026-09-17 |
+| [Interim Engineering Intern_2027_SW](https://careers.qualcomm.com/careers/job/446719785836?domain=qualcomm.com) ✨ | Software | Hyderabad | 2026-09-15 | 2026-09-17 |
+| [Interim Engineering Intern_2027_HW](https://careers.qualcomm.com/careers/job/446719784824?domain=qualcomm.com) ✨ | Software | Bengaluru | 2026-09-09 | 2026-09-17 |
+| [1 year  Internship_SW_CDC](https://careers.qualcomm.com/careers/job/446717035053?domain=qualcomm.com) ✨ | Software | Chennai | 2026-02-24 | 2026-09-17 |
 
 [⬆️ Back to Top](#top)
 
@@ -167,8 +167,8 @@ from official careers APIs daily (at 03:00 AM IST) by GitHub Actions.
 
 | Role | Category | Hub / Location | Posted | First seen |
 |---|---|---|---|---|
-| [Software Engineer - Winter Intern](https://www.rubrik.com/company/careers/departments/job.8166523?gh_jid=8166523) 🆕 | Software | Bengaluru | 2026-09-06 | 2026-09-17 |
-| [Software Engineer (CPD) - Winter Intern](https://www.rubrik.com/company/careers/departments/job.8166537?gh_jid=8166537) 🆕 | Software | Bengaluru | 2026-09-06 | 2026-09-17 |
+| [Software Engineer - Winter Intern](https://www.rubrik.com/company/careers/departments/job.8166523?gh_jid=8166523) ✨ | Software | Bengaluru | 2026-09-06 | 2026-09-17 |
+| [Software Engineer (CPD) - Winter Intern](https://www.rubrik.com/company/careers/departments/job.8166537?gh_jid=8166537) ✨ | Software | Bengaluru | 2026-09-06 | 2026-09-17 |
 
 [⬆️ Back to Top](#top)
 
@@ -176,7 +176,7 @@ from official careers APIs daily (at 03:00 AM IST) by GitHub Actions.
 
 | Role | Category | Hub / Location | Posted | First seen |
 |---|---|---|---|---|
-| [Summer 2027 Intern - Software Engineer](https://salesforce.wd12.myworkdayjobs.com/en-US/External_Career_Site/job/India---Bangalore/Summer-2027-Intern---Software-Engineer_JR337715) 🆕 | Software | Bengaluru | — | 2026-09-17 |
+| [Summer 2027 Intern - Software Engineer](https://salesforce.wd12.myworkdayjobs.com/en-US/External_Career_Site/job/India---Bangalore/Summer-2027-Intern---Software-Engineer_JR337715) ✨ | Software | Bengaluru | — | 2026-09-17 |
 
 [⬆️ Back to Top](#top)
 
@@ -184,7 +184,7 @@ from official careers APIs daily (at 03:00 AM IST) by GitHub Actions.
 
 | Role | Category | Hub / Location | Posted | First seen |
 |---|---|---|---|---|
-| [Software Engineer, Intern](https://stripe.com/jobs/search?gh_jid=8031833) 🆕 | Software | Bengaluru | 2026-07-10 | 2026-09-17 |
+| [Software Engineer, Intern](https://stripe.com/jobs/search?gh_jid=8031833) ✨ | Software | Bengaluru | 2026-07-10 | 2026-09-17 |
 
 [⬆️ Back to Top](#top)
 
@@ -192,7 +192,7 @@ from official careers APIs daily (at 03:00 AM IST) by GitHub Actions.
 
 | Role | Category | Hub / Location | Posted | First seen |
 |---|---|---|---|---|
-| [Software Engineer Intern (January 12th start, 23 weeks)](https://job-boards.greenhouse.io/twilio/jobs/8190889) 🆕 | Software | Remote (India) | 2026-09-16 | 2026-09-17 |
+| [Software Engineer Intern (January 12th start, 23 weeks)](https://job-boards.greenhouse.io/twilio/jobs/8190889) ✨ | Software | Remote (India) | 2026-09-16 | 2026-09-17 |
 
 [⬆️ Back to Top](#top)
 
@@ -200,7 +200,7 @@ from official careers APIs daily (at 03:00 AM IST) by GitHub Actions.
 
 | Role | Category | Hub / Location | Posted | First seen |
 |---|---|---|---|---|
-| [(IND) Grad Intern - No Work Experience](https://walmart.wd504.myworkdayjobs.com/en-US/WalmartExternal/job/IN-KA-BANGALORE-Home-Office-Building-10/XMLNAME--IND--Grad-Intern---No-Work-Experience_R-2557935) 🆕 | Software | Bengaluru | — | 2026-09-17 |
+| [(IND) Grad Intern - No Work Experience](https://walmart.wd504.myworkdayjobs.com/en-US/WalmartExternal/job/IN-KA-BANGALORE-Home-Office-Building-10/XMLNAME--IND--Grad-Intern---No-Work-Experience_R-2557935) ✨ | Software | Bengaluru | — | 2026-09-17 |
 
 [⬆️ Back to Top](#top)
 
