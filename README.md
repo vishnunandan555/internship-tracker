@@ -2,12 +2,12 @@
 
 Auto-updated list of **open tech & software-engineering internships in India** —
 AI/ML, Data, Full-Stack, Backend, Frontend, Mobile, QA/SDET, and Security roles — at
-41 top tech companies, GCCs, and high-growth Indian unicorns. Scraped directly
-from official careers APIs daily (at 00:00 UTC) by GitHub Actions.
+55 top tech companies, GCCs, and high-growth Indian unicorns. Scraped directly
+from official careers APIs daily (at 05:30 AM IST) by GitHub Actions.
 
 🌐 **Live Web Dashboard: [vishnunandan555.github.io/internship-tracker](https://vishnunandan555.github.io/internship-tracker/)** · 🛠️ **[GUIDE.md](GUIDE.md)** · 🚀 **[ROADMAP.md](ROADMAP.md)** · 📋 **[Scrape Logs](logs/)**
 
-> 🕐 Last updated: **2026-09-17 16:46:17 UTC** · 📌 **15** open internships
+> 🕐 Last updated: **2026-09-17 22:16:17 IST** · 📌 **15** open internships
 > · 🆕 = added in the last 7 days
 
 ⭐ Star this repository to keep track of new openings — or watch *Activity* for commits titled “new internship(s)”.
@@ -19,21 +19,30 @@ from official careers APIs daily (at 00:00 UTC) by GitHub Actions.
 | Adobe | — |
 | Amazon | — |
 | Apple | — |
+| Barclays | — |
 | Bloomberg | — |
 | Broadcom (VMware) | — |
 | CRED | — |
 | Cisco | — |
+| Cloudflare | — |
+| CrowdStrike | — |
+| Databricks | — |
+| Datadog | — |
 | Dell Technologies | — |
+| Elastic | — |
 | Freshworks | — |
 | GitHub | — |
+| GitLab | — |
 | [Google](#google) | **2** |
 | Groww | — |
 | [HPE](#hpe) | **1** |
 | InMobi | — |
 | Intel | — |
 | JPMorgan Chase | — |
+| Mastercard | — |
 | Meesho | — |
 | Meta | — |
+| Micron | — |
 | [Microsoft](#microsoft) | **4** |
 | MongoDB | — |
 | Morgan Stanley | — |
@@ -41,6 +50,7 @@ from official careers APIs daily (at 00:00 UTC) by GitHub Actions.
 | Netflix | — |
 | Nokia | — |
 | Oracle | — |
+| Palo Alto Networks | — |
 | PayPal | — |
 | PhonePe | — |
 | [Qualcomm](#qualcomm) | **3** |
@@ -52,9 +62,14 @@ from official careers APIs daily (at 00:00 UTC) by GitHub Actions.
 | Snowflake | — |
 | [Stripe](#stripe) | **1** |
 | Swiggy | — |
+| Twilio | — |
+| Visa | — |
 | [Walmart Global Tech](#walmart-global-tech) | **1** |
 | Wells Fargo | — |
+| Workday | — |
 | Zeta | — |
+| Zomato | — |
+| ASML | *has no software engineering/R&D center in India (field service only in Gujarat); portal is custom Next.js without public CXS API* |
 | American Express | *careers site sits behind Akamai bot defense returning 403 to automated clients* |
 | Arm | *early careers portal (earlycareers-arm.icims.com) requires authenticated candidate login* |
 | Atlassian | *careers site uses iCIMS iframe portal without public search API; student hiring routed via campus and early-career portal* |
@@ -68,9 +83,14 @@ from official careers APIs daily (at 00:00 UTC) by GitHub Actions.
 | Flipkart | *careers site sits behind enterprise bot defense and routes student hiring via campus visits & Flipkart GRiD* |
 | Goldman Sachs | *campus & internship portal (tal.net) requires interactive SSO / browser session* |
 | HP | *careers portal sits behind Cloudflare bot protection returning 403 to non-browser clients* |
+| HSBC | *careers site (mycareer.hsbc.com) runs on Avature CRM without open unauthenticated REST search API* |
+| HashiCorp | *acquired by IBM; public Greenhouse board retired, jobs folded into IBM internal recruitment portal* |
 | Infosys | *student tech hiring conducted exclusively through InfyTQ / Springboard campus portal* |
 | Intuit | *careers portal sits behind Radancy search without open public REST API* |
+| Juspay | *no external ATS; hires student interns exclusively via campus challenges (Unstop/HackerEarth) and direct email* |
 | LinkedIn | *careers site only links to linkedin.com/jobs, which is authwalled and prohibits automated scraping* |
+| Myntra | *careers portal (jobs.myntra.com) is a compiled Flutter web application without public search API; hires via campus & HackerRamp* |
+| Nykaa | *careers portal sits behind bot protection returning 403; internal Darwinbox portal lacks public candidate search REST API* |
 | Postman | *retired public Greenhouse board; careers site runs custom Next.js frontend without public search API* |
 | SAP | *SuccessFactors career site requires authenticated recruiter operators; no public search API* |
 | Siemens | *careers site runs on Avature global portal without public JSON search API; requires interactive session* |
@@ -144,7 +164,7 @@ from official careers APIs daily (at 00:00 UTC) by GitHub Actions.
 
 ## ⚙️ How This Works
 
-A high-speed concurrent [Python scraper](scraper/) runs in GitHub Actions daily at 00:00 UTC:
+A high-speed concurrent [Python scraper](scraper/) runs in GitHub Actions daily at 05:30 AM IST:
 1. Concurrently queries official careers APIs (Workday, Greenhouse, SmartRecruiters, Lever, Eightfold, Phenom, Oracle HCM, and custom REST APIs).
 2. Filters for active internships, co-ops, and trainee engineering roles ([scraper/categories.py](scraper/categories.py)).
 3. Strictly filters locations within India tech hubs (Bengaluru, Hyderabad, Pune, Delhi-NCR, Chennai, Mumbai, and Remote India) ([scraper/regions.py](scraper/regions.py)).

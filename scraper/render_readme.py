@@ -4,6 +4,17 @@ from datetime import datetime, timedelta, timezone
 
 README_PATH = os.path.join(os.path.dirname(__file__), "..", "README.md")
 NEW_BADGE_DAYS = 7
+IST = timezone(timedelta(hours=5, minutes=30))
+
+
+def _to_ist_str(iso_utc: str) -> str:
+    """Convert UTC ISO timestamp to formatted IST timestamp string."""
+    try:
+        dt = datetime.strptime(iso_utc, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+        return dt.astimezone(IST).strftime("%Y-%m-%d %H:%M:%S IST")
+    except Exception:
+        return datetime.now(IST).strftime("%Y-%m-%d %H:%M:%S IST")
+
 
 HEADER = """\
 # 🇮🇳 Software Engineering & Tech Internship Tracker — India
@@ -11,7 +22,7 @@ HEADER = """\
 Auto-updated list of **open tech & software-engineering internships in India** —
 AI/ML, Data, Full-Stack, Backend, Frontend, Mobile, QA/SDET, and Security roles — at
 {n_companies} top tech companies, GCCs, and high-growth Indian unicorns. Scraped directly
-from official careers APIs daily (at 00:00 UTC) by GitHub Actions.
+from official careers APIs daily (at 05:30 AM IST) by GitHub Actions.
 
 🌐 **Live Web Dashboard: [vishnunandan555.github.io/internship-tracker](https://vishnunandan555.github.io/internship-tracker/)** · 🛠️ **[GUIDE.md](GUIDE.md)** · 🚀 **[ROADMAP.md](ROADMAP.md)** · 📋 **[Scrape Logs](logs/)**
 
@@ -27,7 +38,7 @@ FOOTER = """
 
 ## ⚙️ How This Works
 
-A high-speed concurrent [Python scraper](scraper/) runs in GitHub Actions daily at 00:00 UTC:
+A high-speed concurrent [Python scraper](scraper/) runs in GitHub Actions daily at 05:30 AM IST:
 1. Concurrently queries official careers APIs (Workday, Greenhouse, SmartRecruiters, Lever, Eightfold, Phenom, Oracle HCM, and custom REST APIs).
 2. Filters for active internships, co-ops, and trainee engineering roles ([scraper/categories.py](scraper/categories.py)).
 3. Strictly filters locations within India tech hubs (Bengaluru, Hyderabad, Pune, Delhi-NCR, Chennai, Mumbai, and Remote India) ([scraper/regions.py](scraper/regions.py)).
@@ -73,7 +84,7 @@ def render(state):
     companies = sorted(by_company)
     out = [HEADER.format(
         n_companies=len(companies),
-        updated=updated.replace("T", " ").replace("Z", " UTC"),
+        updated=_to_ist_str(updated),
         n_open=len(jobs),
         new_days=NEW_BADGE_DAYS,
     )]
