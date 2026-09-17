@@ -23,6 +23,7 @@ HARD_INCLUDE_RE = _rx(
     r"security engineer|cybersecurity|\bnlp\b|\bllm\b|compiler|kernel|"
     r"\bsde\b|\bmts\b|\bswe\b|\bsw\b|_sw\b|_sw_|\bhw\b|_hw\b|_hw_|"
     r"graduate engineer trainee|\bget\b|technology intern|technical intern|"
+    r"grad(uate)? intern|college intern|engineering intern|"
     r"firmware|embedded|systems engineer|silicon|asic|vlsi|fpga"
 )
 
@@ -58,7 +59,8 @@ CATEGORIES = [
                      r"application develop|computer science|solution develop|"
                      r"game develop|\bdev\b|\bjava\b|\bpython\b|c\+\+|"
                      r"\bgolang\b|\brust\b|graduate engineer trainee|\bget\b|"
-                     r"technical intern|technology intern|engineering intern")),
+                     r"technical intern|technology intern|engineering intern|"
+                     r"grad(uate)? intern|college intern")),
 ]
 
 
