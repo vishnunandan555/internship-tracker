@@ -4,8 +4,12 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import List, Optional
 
-# Matches internship-style roles without matching "internal"/"international".
-INTERN_RE = re.compile(r"\b(intern|interns|internship|internships|co[- ]?op)\b", re.IGNORECASE)
+# Matches internship-style roles while treating underscores, hyphens and boundaries properly,
+# without false-positive matching on "internal"/"international".
+INTERN_RE = re.compile(
+    r"(?:^|[\b_ \-\/])(intern|interns|internship|internships|co[- ]?op)(?:[\b_ \-\/]|$)",
+    re.IGNORECASE,
+)
 
 
 def is_internship(title: str) -> bool:
@@ -44,7 +48,7 @@ class Job:
     is_intern: Optional[bool] = None
     # Engineering role category, assigned in main.py via categories.categorize
     category: Optional[str] = None
-    # Hub tag (Bengaluru, Hyderabad, Pune, Delhi-NCR, etc.)
+    # Hub tag (Bengaluru, Hyderabad, Pune, Delhi-NCR, Chennai, etc.)
     city_tag: Optional[str] = None
     # Publication date (YYYY-MM-DD) from the ATS, when it exposes one
     posted: Optional[str] = None

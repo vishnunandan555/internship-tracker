@@ -1,12 +1,12 @@
-"""Software-engineering role classifier for India Tech Internships.
+"""Software and tech engineering role classifier for India Tech Internships.
 
-The tracker lists tech & engineering internships: AI/ML, Data, Mobile, Frontend,
-Backend/Infra, general Software (SWE/SDE/MTS), QA, Security. categorize() returns
-the category for a title, or None for out-of-scope roles (sales, HR, finance,
-legal, marketing, operations, ...) which are then dropped.
+The tracker lists tech engineering internships: AI/ML, Data, Mobile, Frontend,
+Backend/Infra, Software (SWE/SDE/MTS), Hardware/Silicon, QA, Security.
+categorize() returns the category for a title, or None for out-of-scope roles
+(sales, HR, finance, legal, marketing, operations, ...) which are then dropped.
 
 Order matters: first matching category wins, so the more specific ones
-(Security, QA, Mobile, ...) come before the catch-alls.
+(Security, QA, Hardware/Silicon, Mobile, ...) come before the catch-alls.
 """
 import re
 
@@ -15,14 +15,15 @@ def _rx(pattern):
     return re.compile(pattern, re.IGNORECASE)
 
 
-# Unambiguous engineering-role signals in India tech roles (SDE, MTS, SWE, etc.).
+# Unambiguous engineering-role signals in India tech roles (SDE, MTS, SWE, Silicon, etc.).
 HARD_INCLUDE_RE = _rx(
     r"software|machine learning|deep learning|computer vision|"
     r"applied scien|research scien|data scien|data engineer|data analy|"
     r"full[- ]?stack|front[- ]?end|back[- ]?end|\bios\b|android|\bsdet\b|"
     r"security engineer|cybersecurity|\bnlp\b|\bllm\b|compiler|kernel|"
-    r"\bsde\b|\bmts\b|\bswe\b|graduate engineer trainee|\bget\b|"
-    r"technology intern|technical intern|firmware|embedded|systems engineer"
+    r"\bsde\b|\bmts\b|\bswe\b|\bsw\b|_sw\b|_sw_|\bhw\b|_hw\b|_hw_|"
+    r"graduate engineer trainee|\bget\b|technology intern|technical intern|"
+    r"firmware|embedded|systems engineer|silicon|asic|vlsi|fpga"
 )
 
 # Roles that pattern-match a keyword but aren't tech/software engineering work.
@@ -45,6 +46,7 @@ CATEGORIES = [
                   r"student researcher|robotics|autonom|perception|recommender|"
                   r"applied scientist|research scientist")),
     ("Data", _rx(r"\bdata\b|analytics|business intelligence|bi engineer")),
+    ("Hardware/Silicon", _rx(r"silicon|hardware|\bhw\b|_hw\b|_hw_|asic|vlsi|fpga|semiconductor|circuit")),
     ("Mobile", _rx(r"mobile|\bios\b|android|flutter|react native")),
     ("Frontend", _rx(r"front[- ]?end|web develop|web engineer|\bui engineer\b|"
                      r"javascript|typescript|\breact\b")),
@@ -52,11 +54,11 @@ CATEGORIES = [
                           r"cloud|devops|site reliability|\bsre\b|\bapi\b|"
                           r"database|storage|network|linux|kernel|embedded|"
                           r"firmware|compiler|operating system|virtualization")),
-    ("Software", _rx(r"software|\bswe\b|\bsde\b|\bmts\b|developer|full[- ]?stack|programmer|"
+    ("Software", _rx(r"software|\bswe\b|\bsde\b|\bmts\b|\bsw\b|_sw\b|_sw_|developer|full[- ]?stack|programmer|"
                      r"application develop|computer science|solution develop|"
                      r"game develop|\bdev\b|\bjava\b|\bpython\b|c\+\+|"
                      r"\bgolang\b|\brust\b|graduate engineer trainee|\bget\b|"
-                     r"technical intern|technology intern")),
+                     r"technical intern|technology intern|engineering intern")),
 ]
 
 

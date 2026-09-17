@@ -2,61 +2,81 @@
 
 Auto-updated list of **open tech & software-engineering internships in India** —
 AI/ML, Data, Full-Stack, Backend, Frontend, Mobile, QA/SDET, and Security roles — at
-37 top tech companies, GCCs, and high-growth Indian unicorns. Scraped directly
+40 top tech companies, GCCs, and high-growth Indian unicorns. Scraped directly
 from official careers APIs every 3 hours by GitHub Actions.
 
 🌐 **Live Web Dashboard: [vishnunandan555.github.io/internship-tracker](https://vishnunandan555.github.io/internship-tracker/)**
 
-> 🕐 Last updated: **2026-09-17 15:57:46 UTC** · 📌 **7** open internships
+> 🕐 Last updated: **2026-09-17 16:22:39 UTC** · 📌 **11** open internships
 > · 🆕 = added in the last 7 days
 
 ⭐ Star this repository to keep track of new openings — or watch *Activity* for commits titled “new internship(s)”.
 
 | Company | Open Internships in India |
 |---|:---:|
+| AMD | — |
+| Accenture | — |
 | Adobe | — |
 | Amazon | — |
 | Apple | — |
 | Bloomberg | — |
+| Broadcom (VMware) | — |
 | CRED | — |
 | Cisco | — |
-| Cloudflare | — |
-| Coinbase | — |
-| Databricks | — |
-| Datadog | — |
-| Dropbox | — |
-| Figma | — |
+| Dell Technologies | — |
+| Freshworks | — |
 | GitHub | — |
-| [Google](#google) | **1** |
+| [Google](#google) | **2** |
 | Groww | — |
-| Hudson River Trading | — |
+| HPE | — |
 | InMobi | — |
 | Intel | — |
-| Jane Street | — |
+| JPMorgan Chase | — |
 | Meesho | — |
 | Meta | — |
 | [Microsoft](#microsoft) | **4** |
 | MongoDB | — |
+| Morgan Stanley | — |
 | [NVIDIA](#nvidia) | **1** |
 | Netflix | — |
+| Nokia | — |
 | Oracle | — |
 | PayPal | — |
+| PhonePe | — |
+| [Qualcomm](#qualcomm) | **3** |
+| Razorpay | — |
 | Salesforce | — |
 | ServiceNow | — |
-| Slice | — |
-| Snap | — |
 | Snowflake | — |
-| Spotify | — |
 | [Stripe](#stripe) | **1** |
 | Swiggy | — |
 | Target | — |
+| Walmart Global Tech | — |
+| Wells Fargo | — |
 | Zeta | — |
+| American Express | *careers site sits behind Akamai bot defense returning 403 to automated clients* |
+| Arm | *early careers portal (earlycareers-arm.icims.com) requires authenticated candidate login* |
+| Atlassian | *careers site uses iCIMS iframe portal without public search API; student hiring routed via campus and early-career portal* |
+| BrowserStack | *uses closed ATS without public search API; routes student hiring via campus & aggregators* |
 | ByteDance | *job-search API rejects requests without browser client signature; needs headless browser* |
-| Flipkart | *careers site sits behind enterprise bot defense and routes student hiring via campus/Flipkart GRiD* |
+| Chargebee | *uses closed ATS without public search API; routes student hiring via campus & aggregators* |
+| D. E. Shaw | *campus-only hiring program for Indian engineering colleges (IIT/BITS/NIT)* |
+| Deloitte | *South Asia career portal runs on closed SAP SuccessFactors infrastructure; routes graduate hiring via campus* |
+| Dream11 | *uses Dream Sports proprietary careers portal without public search API* |
+| Flipkart | *careers site sits behind enterprise bot defense and routes student hiring via campus visits & Flipkart GRiD* |
 | Goldman Sachs | *campus & internship portal (tal.net) requires interactive SSO / browser session* |
+| HP | *careers portal sits behind Cloudflare bot protection returning 403 to non-browser clients* |
+| Infosys | *student tech hiring conducted exclusively through InfyTQ / Springboard campus portal* |
+| Intuit | *careers portal sits behind Radancy search without open public REST API* |
 | LinkedIn | *careers site only links to linkedin.com/jobs, which is authwalled and prohibits automated scraping* |
+| Postman | *retired public Greenhouse board; careers site runs custom Next.js frontend without public search API* |
+| SAP | *SuccessFactors career site requires authenticated recruiter operators; no public search API* |
+| Tata Consultancy Services | *student tech hiring conducted exclusively through TCS NextStep / National Qualifier Test (NQT) campus portal* |
 | Tesla | *careers site sits behind Akamai bot protection returning 403 to non-browser clients* |
 | Uber | *careers search API sits behind Cloudflare bot protection returning 403 to non-browser clients; needs headless browser* |
+| Zepto | *uses TalentRecruit proprietary portal without public search API; hires via campus & portal forms* |
+| Zerodha | *no external ATS; engineering openings posted ad-hoc via static page (zerodha.com/careers) and email* |
+| Zoho | *uses Zoho Recruit proprietary portal without public job search API* |
 
 ---
 
@@ -65,6 +85,7 @@ from official careers APIs every 3 hours by GitHub Actions.
 | Role | Category | Hub / Location | Posted | First seen |
 |---|---|---|---|---|
 | [Software Engineering PhD Intern, Summer 2027](https://www.google.com/about/careers/applications/jobs/results/109976286780105414) 🆕 | Software | Bengaluru | 2026-09-07 | 2026-09-17 |
+| [Silicon Engineering Intern, PhD, Summer 2027](https://www.google.com/about/careers/applications/jobs/results/109375266236572358) 🆕 | Hardware/Silicon | Bengaluru | 2026-09-07 | 2026-09-17 |
 
 ## Microsoft
 
@@ -80,6 +101,14 @@ from official careers APIs every 3 hours by GitHub Actions.
 | Role | Category | Hub / Location | Posted | First seen |
 |---|---|---|---|---|
 | [PhD Intern, AI ML in Wireless L1/L2 - Fall 2026](https://nvidia.wd5.myworkdayjobs.com/en-US/NVIDIAExternalCareerSite/job/India-Bengaluru/PhD-Intern--AI-ML-in-Wireless-L1-L2---Fall-2026_JR2024423) 🆕 | AI/ML | Bengaluru | 2026-08-31 | 2026-09-17 |
+
+## Qualcomm
+
+| Role | Category | Hub / Location | Posted | First seen |
+|---|---|---|---|---|
+| [Interim Engineering Intern_2027_SW](https://careers.qualcomm.com/careers/job/446719785836?domain=qualcomm.com) 🆕 | Software | Hyderabad | 2026-09-15 | 2026-09-17 |
+| [Interim Engineering Intern_2027_HW](https://careers.qualcomm.com/careers/job/446719784824?domain=qualcomm.com) 🆕 | Hardware/Silicon | Bengaluru | 2026-09-09 | 2026-09-17 |
+| [1 year  Internship_SW_CDC](https://careers.qualcomm.com/careers/job/446717035053?domain=qualcomm.com) 🆕 | Software | Chennai | 2026-02-24 | 2026-09-17 |
 
 ## Stripe
 

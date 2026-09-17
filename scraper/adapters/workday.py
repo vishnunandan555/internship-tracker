@@ -37,7 +37,7 @@ def _posted_date(posted_on):
     return (datetime.now(timezone.utc) - timedelta(days=delta)).strftime("%Y-%m-%d")
 
 PAGE = 20  # CXS hard limit per request
-MAX_PAGES = 60
+DEFAULT_MAX_PAGES = 15
 EMPTY_RETRIES = 4
 
 
@@ -60,9 +60,10 @@ def fetch(cfg):
     api = "https://{}/wday/cxs/{}/{}/jobs".format(host, tenant, site)
     search_text = cfg.get("search_text", "intern")
     facets = cfg.get("applied_facets", {})
+    max_pages = cfg.get("max_pages", DEFAULT_MAX_PAGES)
 
     jobs, offset, total = [], 0, None
-    for page_no in range(MAX_PAGES):
+    for page_no in range(max_pages):
         data = _page(api, facets, search_text, offset)
         postings = data.get("jobPostings", [])
         if total is None:
