@@ -1,7 +1,7 @@
 ========================================================================
-SCRAPE RUN SUMMARY — 2026-09-17 17:44:03 UTC
+SCRAPE RUN SUMMARY — 2026-09-17 23:35:52 UTC
 ========================================================================
-Runtime:            81.6 seconds
+Runtime:            79.5 seconds
 Companies Scraped:  56 total
   - Succeeded:      56
   - Failed:         0
@@ -9,7 +9,7 @@ Active India Roles: 17
 Changes Detected:
   - New Additions:  +0
   - Closed Roles:   -0
-  - Reopened Roles: ~1
+  - Reopened Roles: ~0
 ------------------------------------------------------------------------
 
 ========================================================================
