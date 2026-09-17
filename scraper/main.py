@@ -321,11 +321,12 @@ def main():
     if args.list:
         print(display.bold(f"\nConfigured Scrapers ({len(COMPANIES)} companies):"))
         for c in sorted(COMPANIES, key=lambda x: x["name"]):
-            print(f"  • {display.bold(c['name']):<24} (adapter: {c['fetch'].__module__.split('.')[-1]})")
+            padded = f"{c['name']:<24}"
+            print(f"  • {display.bold(padded)} (adapter: {c['fetch'].__module__.split('.')[-1]})")
 
         print(display.bold(f"\nDocumented Unsupported Companies ({len(UNSUPPORTED)} companies):"))
         for name, reason in sorted(UNSUPPORTED.items()):
-            print(f"  × {display.bold(name):<24} {display.dim(reason)}")
+            print(f"  {display.status_skip(name, reason)}")
         print()
         return 0
 

@@ -62,7 +62,8 @@ def status_fail(name: str, duration: float, err: str) -> str:
 
 def status_skip(name: str, reason: str) -> str:
     badge = yellow("[SKIP]")
-    return f"{badge} {name:<30} {dim(reason)}"
+    padded_name = f"{name:<24}"
+    return f"{badge} {bold(padded_name)} {dim(reason)}"
 
 
 def print_dashboard(total_duration: float, succeeded: set, failed: dict,

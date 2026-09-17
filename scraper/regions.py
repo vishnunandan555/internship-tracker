@@ -106,6 +106,17 @@ def is_india_job(locations):
     return any(_is_indian_location(loc) for loc in locations if loc)
 
 
+# Ordered mapping of target UI hub tags to identifying location keywords.
+CITY_TAG_RULES: tuple = (
+    ("Bengaluru", ("bengaluru", "bangalore", "blr")),
+    ("Hyderabad", ("hyderabad", "secunderabad", "cyberabad")),
+    ("Pune", ("pune",)),
+    ("Delhi-NCR", ("gurugram", "gurgaon", "noida", "delhi", "ncr")),
+    ("Chennai", ("chennai",)),
+    ("Mumbai", ("mumbai", "thane", "navi mumbai")),
+)
+
+
 def get_city_tag(locations):
     """Classify into standard UI filter tags: bengaluru, hyderabad, pune, ncr, chennai, mumbai, remote, other."""
     combined = " ".join(locations or []).lower()
@@ -113,16 +124,10 @@ def get_city_tag(locations):
     # is verified to actually be an Indian location (avoiding matching US/global-only remote roles).
     if REMOTE_INDIA.search(combined) or ("remote" in combined and is_india_job(locations)):
         return "Remote (India)"
-    if "bengaluru" in combined or "bangalore" in combined or "blr" in combined:
-        return "Bengaluru"
-    if "hyderabad" in combined or "secunderabad" in combined or "cyberabad" in combined:
-        return "Hyderabad"
-    if "pune" in combined:
-        return "Pune"
-    if any(c in combined for c in ["gurugram", "gurgaon", "noida", "delhi", "ncr"]):
-        return "Delhi-NCR"
-    if "chennai" in combined:
-        return "Chennai"
-    if "mumbai" in combined or "thane" in combined or "navi mumbai" in combined:
-        return "Mumbai"
+
+    for tag, keywords in CITY_TAG_RULES:
+        if any(kw in combined for kw in keywords):
+            return tag
+
     return "India (Multiple/Other)"
+
