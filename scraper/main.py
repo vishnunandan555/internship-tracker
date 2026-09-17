@@ -10,9 +10,11 @@ Usage:
 """
 import argparse
 import concurrent.futures
+from datetime import datetime, timezone
 import gzip
 import json
 import os
+import re
 import shutil
 import sys
 import time
@@ -28,6 +30,22 @@ from .render_readme import render
 
 HEALTH_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "health.json")
 DOCS_JOBS_PATH = os.path.join(os.path.dirname(__file__), "..", "docs", "jobs.json")
+DOCS_SITEMAP_PATH = os.path.join(os.path.dirname(__file__), "..", "docs", "sitemap.xml")
+
+
+def _update_sitemap():
+    """Keep sitemap.xml <lastmod> timestamps synced for SEO search engine crawlers."""
+    if not os.path.exists(DOCS_SITEMAP_PATH):
+        return
+    try:
+        today_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        with open(DOCS_SITEMAP_PATH, "r", encoding="utf-8") as f:
+            content = f.read()
+        updated = re.sub(r"<lastmod>[^<]+</lastmod>", f"<lastmod>{today_str}</lastmod>", content)
+        with open(DOCS_SITEMAP_PATH, "w", encoding="utf-8") as f:
+            f.write(updated)
+    except Exception as err:
+        print(display.yellow(f"warning: could not update sitemap.xml: {err}"))
 
 
 def _scrape_single_company(cfg, keyword=None):
@@ -179,6 +197,7 @@ def run(only_companies=None, keyword=None, dry_run=False, workers=8):
             with gzip.open(store.DATA_PATH + ".gz", "wb") as f_out:
                 shutil.copyfileobj(f_in, f_out)
         shutil.copyfile(store.DATA_PATH + ".gz", DOCS_JOBS_PATH + ".gz")
+        _update_sitemap()
     except Exception as err:
         print(display.yellow(f"warning: could not sync docs/jobs.json: {err}"))
 

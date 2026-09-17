@@ -10,7 +10,8 @@ from official careers APIs daily (at 03:00 AM IST) by GitHub Actions.
 [![Tracked Companies](https://img.shields.io/badge/Tracked_Companies-55_Active-2563eb?style=for-the-badge&logo=airplay&logoColor=white)](LIST.md)
 [![Developer Guide](https://img.shields.io/badge/Developer_Guide-GUIDE.md-475569?style=for-the-badge&logo=readme&logoColor=white)](GUIDE.md)
 [![Roadmap](https://img.shields.io/badge/Roadmap-ROADMAP.md-7c3aed?style=for-the-badge&logo=target&logoColor=white)](ROADMAP.md)
-[![Scrape Logs](https://img.shields.io/badge/Scrape_Logs-logs%2F-059669?style=for-the-badge&logo=files&logoColor=white)](logs/)
+[![SEO & Marketing](https://img.shields.io/badge/Marketing_Plan-SEO.md-059669?style=for-the-badge&logo=google&logoColor=white)](SEO.md)
+[![Scrape Logs](https://img.shields.io/badge/Scrape_Logs-logs%2F-334155?style=for-the-badge&logo=files&logoColor=white)](logs/)
 
 > 🕐 Last updated: **2026-09-17 23:15:25 IST** · 📌 **17** open internships
 > · ✨ = added in the last 7 days

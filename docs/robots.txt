@@ -1,0 +1,8 @@
+# robots.txt for InternTrack India
+# https://vishnunandan555.github.io/interntrack-india/
+
+User-agent: *
+Allow: /
+
+# Direct search engine crawlers to the sitemap index
+Sitemap: https://vishnunandan555.github.io/interntrack-india/sitemap.xml
