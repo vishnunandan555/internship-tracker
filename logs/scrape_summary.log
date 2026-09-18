@@ -1,15 +1,21 @@
 ========================================================================
-SCRAPE RUN SUMMARY — 2026-09-17 23:35:52 UTC
+SCRAPE RUN SUMMARY — 2026-09-18 23:25:52 UTC
 ========================================================================
-Runtime:            79.5 seconds
+Runtime:            77.7 seconds
 Companies Scraped:  56 total
   - Succeeded:      56
   - Failed:         0
-Active India Roles: 17
+Active India Roles: 19
 Changes Detected:
-  - New Additions:  +0
+  - New Additions:  +2
   - Closed Roles:   -0
   - Reopened Roles: ~0
 ------------------------------------------------------------------------
+
+[NEW INTERNSHIPS ADDED]
+  + Microsoft — Hardware Engineering INTERN (Bengaluru) [Hardware/Silicon]
+    Apply: https://apply.careers.microsoft.com/careers/job/1970393557000861
+  + Microsoft — Silicon Engineering INTERN (Bengaluru) [Hardware/Silicon]
+    Apply: https://apply.careers.microsoft.com/careers/job/1970393557000875
 
 ========================================================================
